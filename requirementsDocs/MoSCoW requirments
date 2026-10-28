@@ -1,0 +1,33 @@
+1Must Have: 
+
+- U01: User Can Create an account;
+- UO2: User can login to existing account;
+- DT01: Account data must be saved to a local file;
+- DT02: Account password must be hashed;
+
+
+
+
+
+2Should Have:
+- AO1: Changeable font;
+- AO2: Changeable colour (dark mode);
+- A03: Magnifying glass;
+- A04: Narrator mode;
+
+
+
+
+
+3Could Have:
+-
+- 
+-
+-
+-
+
+4Would have:
+-
+-
+-
+-
