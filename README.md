@@ -14,4 +14,4 @@ npm run dev
 
 Open the local address shown in the terminal (usually http://localhost:5173/). Press `Ctrl+C` in the terminal to stop the development server.
 
-The `server` folder is currently empty and does not need to be started yet.
+
