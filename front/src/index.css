@@ -21,7 +21,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background-color: #F7F3EB;
-  background-image: url('steve_jobs_pastel_wallpaper.svg');
+  background-image: url('./assets/steve_jobs_pastel_wallpaper.svg');
   background-position: top right;
   background-repeat: no-repeat;
   background-size: cover;
