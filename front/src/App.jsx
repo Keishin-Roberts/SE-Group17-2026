@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import './index.css'
 
 function App() {
   const [draft, setDraft] = useState('')
   const [messages, setMessages] = useState([])
 
   function handleSubmit(event) {
-    // Prevents browser refresh when theform is submitted
+    // Prevents browser refresh when the form is submitted
     event.preventDefault()
 
-    //remove surrounding room and ignote empty messages
+    // Remove surrounding whitespace and ignore empty messages
     const text = draft.trim()
     if (text === '') return
 
@@ -17,7 +16,7 @@ function App() {
       id: crypto.randomUUID(),
       text: text
     }
-    //Create new array with the new message added to the end of the previous messages
+    // Create a new array with the new message added after the previous ones
     setMessages(previous => [...previous, newMessage])
     // Clear the input field
     setDraft('')
@@ -25,14 +24,24 @@ function App() {
 
   return (
     <main className="container">
-      <h1>Chat with Steve Jobs</h1>
-      <p>Explore his life, work and ideas.</p>
+      <header className="chat-header">
+        <div>
+          <h1>Chat with Steve Jobs</h1>
+          <p className="chat-subtitle">Explore his life, work and ideas.</p>
+        </div>
+      </header>
 
       <div
         className="chat-history"
         role="log"
         aria-label="Conversation"
       >
+        {messages.length === 0 && (
+          <p className="chat-empty">
+            No messages yet — ask Steve anything to start the conversation.
+          </p>
+        )}
+
         {messages.map(message => (
           <div className="message-row message-row-user" key={message.id}>
             <p className="bubble bubble-user">
@@ -43,9 +52,10 @@ function App() {
         ))}
       </div>
 
-      <label htmlFor="message">Your message</label>
-
       <form className="chat-form" onSubmit={handleSubmit}>
+        <label className="visually-hidden" htmlFor="message">
+          Your message
+        </label>
         <input
           id="message"
           type="text"
@@ -53,7 +63,18 @@ function App() {
           value={draft}
           onChange={event => setDraft(event.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">
+          Send
+          <svg
+            className="send-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <line x1="4" y1="12" x2="18" y2="12" />
+            <polyline points="13 7 18 12 13 17" />
+          </svg>
+        </button>
       </form>
     </main>
   )

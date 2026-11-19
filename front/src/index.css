@@ -1,5 +1,22 @@
+:root {
+  --ink: #172536;
+  --muted: #5d6f82;
+  --navy: #06264b;
+  --line: #d9e1ea;
+  --chat-bg: #f4f7fb;
+}
+
 body {
-  background-color: rgb(144, 144, 219);
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f7f3eb;
+  background-image: url('./assets/steve_jobs_pastel_wallpaper.svg');
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #root {
@@ -7,42 +24,102 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px 16px;
 }
-/* Main chat panel*/
+
+/* Main chat panel */
 .container {
   box-sizing: border-box;
-  width: 92%;
+  width: 100%;
   max-width: 700px;
-  margin: 24px auto;
-  padding: 24px;
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgb(0 0 0 / 12%);
-  font-family: Arial, sans-serif;
-  color: #172536;
+  padding: 28px;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 22px;
+  background-color: rgb(255 255 255 / 92%);
+  box-shadow:
+    0 24px 60px rgb(23 37 54 / 18%),
+    0 2px 8px rgb(23 37 54 / 6%);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
-/* Conversation area*/
+
+/* Header */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.chat-header h1 {
+  margin: 0;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+}
+
+.chat-subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Conversation area */
 .chat-history {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 280px;
-  padding: 16px;
+  height: 300px;
+  margin-top: 18px;
+  padding: 18px;
   overflow-y: auto;
   overflow-wrap: anywhere;
-  border: 1px solid #bcc5cf;
-  border-radius: 8px;
-  background-color: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background-color: var(--chat-bg);
+  box-shadow: inset 0 2px 6px rgb(23 37 54 / 4%);
+  scrollbar-color: #c3cedb transparent;
+  scrollbar-width: thin;
+}
+
+.chat-history::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background-color: #c3cedb;
+}
+
+.chat-empty {
+  margin: auto;
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 /* One row per message; assistant on the left, user on the right */
 .message-row {
   display: flex;
   justify-content: flex-start;
+  animation: bubble-in 180ms ease-out;
 }
 
 .message-row-user {
   justify-content: flex-end;
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .bubble {
@@ -52,19 +129,17 @@ body {
   border: 1px solid #d7dee6;
   border-radius: 16px;
   background-color: #ffffff;
-  box-shadow: 0 1px 3px rgb(23 37 54 / 6%);
-  color: #172536;
+  color: var(--ink);
   font-size: 0.95rem;
   line-height: 1.45;
   white-space: pre-wrap;
 }
 
-/* Your own messages: navy accent from the Submit button, tail on the right */
+/* Your own messages: navy accent from the Send button, tail on the right */
 .bubble-user {
-  border-color: #06264b;
+  border-color: var(--navy);
   border-bottom-right-radius: 4px;
-  background-color: #06264b;
-  box-shadow: 0 4px 12px rgb(6 38 75 / 22%);
+  background-color: var(--navy);
   color: #ffffff;
 }
 
@@ -78,47 +153,119 @@ body {
   text-transform: uppercase;
 }
 
-.container label {
-  display: block;
-  margin: 16px 0 8px;
-}
-/* Chat form*/
+/* Chat form */
 .chat-form {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .chat-form input {
   flex: 1;
   min-width: 0;
-}
-
-.chat-form input,
-.chat-form button {
-  padding: 12px;
-  border: 1px solid #7c8998;
-  border-radius: 8px;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: inherit;
   font: inherit;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.chat-form input::placeholder {
+  color: #93a1b1;
+}
+
+.chat-form input:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgb(6 38 75 / 12%);
 }
 
 .chat-form button {
-  background-color: #06264b;
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #0a3160, var(--navy));
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
   cursor: pointer;
-}
-/* Keyboard focus  */
-.chat-form :focus-visible {
-  outline: 3px solid #06264b;
-  outline-offset: 3px;
+  transition: filter 150ms ease, transform 120ms ease;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background-color: #F7F3EB;
-  background-image: url('./assets/steve_jobs_pastel_wallpaper.svg');
-  background-position: top right;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+.chat-form button:hover {
+  filter: brightness(1.12);
+}
+
+.chat-form button:active {
+  transform: translateY(1px);
+}
+
+/* Keyboard focus */
+.chat-form input:focus-visible,
+.chat-form button:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.send-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  #root {
+    align-items: flex-start;
+    padding: 16px 12px;
+  }
+
+  .container {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .chat-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .chat-history {
+    height: 260px;
+    padding: 14px;
+  }
+
+  .bubble {
+    max-width: 88%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message-row {
+    animation: none;
+  }
+
+  .chat-form button,
+  .chat-form input {
+    transition: none;
+  }
 }
