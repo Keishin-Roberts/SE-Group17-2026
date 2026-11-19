@@ -32,6 +32,11 @@ body {
   background-color: #f8fafc;
 }
 
+.user-message{
+  align-self: flex-end;
+  text-align: right;
+}
+
 .container label {
   display: block;
   margin: 16px 0 8px;

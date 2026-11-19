@@ -34,7 +34,7 @@ function App() {
         aria-label="Conversation"
       >
         {messages.map(message => (
-          <p key={message.id}>
+          <p key={message.id} className="user-message">
             <strong>You: </strong>
             {message.text}
           </p>
