@@ -111,7 +111,7 @@ body {
 .message-row {
   display: flex;
   justify-content: flex-start;
-  animation: bubble-in 180ms ease-out;
+  animation: bubble-in 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .message-row-user {
@@ -121,7 +121,7 @@ body {
 @keyframes bubble-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;

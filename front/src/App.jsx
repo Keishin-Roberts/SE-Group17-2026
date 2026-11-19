@@ -23,25 +23,39 @@ function App() {
       author: 'user',
       text: text
     }
-    // Create a new array with the new message added after the previous ones
-    setMessages(previous => [...previous, newMessage])
-    // Clear the input field
+    const thinkingMessage = {
+      id: crypto.randomUUID(),
+      author: 'bot',
+      text: 'Steve is thinking...'
+    }
+    setMessages(previous => [...previous, newMessage, thinkingMessage])
     setDraft('')
 
-    // Send the message to the backend and show its answer
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text })
-    })
-    const data = await response.json()
+    let replyText
+    try {
+      const [response] = await Promise.all([
+        fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        }),
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ])
+      if (!response.ok) throw new Error('Chat request failed')
+      const data = await response.json()
+      replyText = data.reply
+    } catch {
+      replyText = 'Could not get a reply. Please try again.'
+    }
 
     const replyMessage = {
       id: crypto.randomUUID(),
       author: 'bot',
-      text: data.reply
+      text: replyText
     }
-    setMessages(previous => [...previous, replyMessage])
+    setMessages(previous => previous.map(message =>
+      message.id === thinkingMessage.id ? replyMessage : message
+    ))
   }
 
   return (
