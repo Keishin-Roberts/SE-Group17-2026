@@ -34,10 +34,12 @@ function App() {
         aria-label="Conversation"
       >
         {messages.map(message => (
-          <p key={message.id}>
-            <strong>You: </strong>
-            {message.text}
-          </p>
+          <div className="message-row message-row-user" key={message.id}>
+            <p className="bubble bubble-user">
+              <span className="bubble-author">You</span>
+              {message.text}
+            </p>
+          </div>
         ))}
       </div>
 
