@@ -79,6 +79,7 @@ body {
   margin-top: 18px;
   padding: 18px;
   overflow-y: auto;
+  scroll-behavior: smooth;
   overflow-wrap: anywhere;
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -290,6 +291,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .chat-history {
+    scroll-behavior: auto;
+  }
+
   .message-row {
     animation: none;
   }

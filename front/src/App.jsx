@@ -1,8 +1,14 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 function App() {
   const [draft, setDraft] = useState('')
   const [messages, setMessages] = useState([])
+  const historyRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const history = historyRef.current
+    history.scrollTop = history.scrollHeight
+  }, [messages])
 
   async function handleSubmit(event) {
     // Prevents browser refresh when the form is submitted
@@ -48,6 +54,7 @@ function App() {
       </header>
 
       <div
+        ref={historyRef}
         className="chat-history"
         role="log"
         aria-label="Conversation"
