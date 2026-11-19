@@ -143,6 +143,10 @@ body {
   color: #ffffff;
 }
 
+.bubble-bot {
+  border-bottom-left-radius: 4px;
+}
+
 .bubble-author {
   display: block;
   margin-bottom: 3px;

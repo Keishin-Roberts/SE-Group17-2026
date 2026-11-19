@@ -4,7 +4,7 @@ function App() {
   const [draft, setDraft] = useState('')
   const [messages, setMessages] = useState([])
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     // Prevents browser refresh when the form is submitted
     event.preventDefault()
 
@@ -14,12 +14,28 @@ function App() {
 
     const newMessage = {
       id: crypto.randomUUID(),
+      author: 'user',
       text: text
     }
     // Create a new array with the new message added after the previous ones
     setMessages(previous => [...previous, newMessage])
     // Clear the input field
     setDraft('')
+
+    // Send the message to the backend and show its answer
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    })
+    const data = await response.json()
+
+    const replyMessage = {
+      id: crypto.randomUUID(),
+      author: 'bot',
+      text: data.reply
+    }
+    setMessages(previous => [...previous, replyMessage])
   }
 
   return (
@@ -43,9 +59,11 @@ function App() {
         )}
 
         {messages.map(message => (
-          <div className="message-row message-row-user" key={message.id}>
-            <p className="bubble bubble-user">
-              <span className="bubble-author">You</span>
+          <div className={`message-row message-row-${message.author}`} key={message.id}>
+            <p className={`bubble bubble-${message.author}`}>
+              <span className="bubble-author">
+                {message.author === 'user' ? 'You' : 'Steve'}
+              </span>
               {message.text}
             </p>
           </div>
