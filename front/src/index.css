@@ -8,7 +8,7 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  overflow: hidden;
   background-color: #f7f3eb;
   background-image: url('./assets/steve_jobs_pastel_wallpaper.svg');
   background-position: top right;
@@ -20,7 +20,9 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  box-sizing: border-box;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,8 +32,11 @@ body {
 /* Main chat panel */
 .container {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 700px;
+  max-height: 100%;
   padding: 28px;
   border: 1px solid rgb(255 255 255 / 70%);
   border-radius: 22px;
@@ -70,6 +75,7 @@ body {
   flex-direction: column;
   gap: 10px;
   height: 300px;
+  min-height: 0;
   margin-top: 18px;
   padding: 18px;
   overflow-y: auto;
@@ -260,6 +266,26 @@ body {
 
   .bubble {
     max-width: 88%;
+  }
+}
+
+@media (max-height: 420px) {
+  #root,
+  .container {
+    padding-block: 8px;
+  }
+
+  .chat-header {
+    padding-bottom: 8px;
+  }
+
+  .chat-history {
+    margin-top: 8px;
+    padding-block: 8px;
+  }
+
+  .chat-form {
+    margin-top: 8px;
   }
 }
 
