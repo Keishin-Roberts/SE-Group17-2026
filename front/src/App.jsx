@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import MessageList from './MessageList.jsx'
 
 function App() {
   const [draft, setDraft] = useState('')
@@ -67,28 +68,13 @@ function App() {
         </div>
       </header>
 
-      <div
+     <div
         ref={historyRef}
         className="chat-history"
         role="log"
         aria-label="Conversation"
       >
-        {messages.length === 0 && (
-          <p className="chat-empty">
-            No messages yet — ask Steve anything to start the conversation.
-          </p>
-        )}
-
-        {messages.map(message => (
-          <div className={`message-row message-row-${message.author}`} key={message.id}>
-            <p className={`bubble bubble-${message.author}`}>
-              <span className="bubble-author">
-                {message.author === 'user' ? 'You' : 'Steve'}
-              </span>
-              {message.text}
-            </p>
-          </div>
-        ))}
+        <MessageList message={messages} />
       </div>
 
       <form className="chat-form" onSubmit={handleSubmit}>
