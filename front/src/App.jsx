@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import MessageList from './MessageList.jsx'
+import ChatForm from './ChatForm.jsx'
 
 function App() {
   const [draft, setDraft] = useState('')
@@ -77,30 +78,11 @@ function App() {
         <MessageList message={messages} />
       </div>
 
-      <form className="chat-form" onSubmit={handleSubmit}>
-        <label className="visually-hidden" htmlFor="message">
-          Your message
-        </label>
-        <input
-          id="message"
-          type="text"
-          placeholder="Type your question..."
-          value={draft}
-          onChange={event => setDraft(event.target.value)}
-        />
-        <button type="submit">
-          Send
-          <svg
-            className="send-icon"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <line x1="4" y1="12" x2="18" y2="12" />
-            <polyline points="13 7 18 12 13 17" />
-          </svg>
-        </button>
-      </form>
+      <ChatForm
+        draft={draft}
+        setDraft={setDraft}
+        handleSubmit={handleSubmit}
+      />
     </main>
   )
 }
