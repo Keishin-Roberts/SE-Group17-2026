@@ -7,6 +7,7 @@ function ChatBox() {
     const [draft, setDraft] = useState('')
     const [messages, setMessages] = useState([])
     const historyRef = useRef(null)
+    // keep newest messages visible when the conversation updates
     useLayoutEffect(() => {
         const history = historyRef.current
         history.scrollTop = history.scrollHeight
@@ -48,6 +49,7 @@ function ChatBox() {
                 new Promise(resolve => setTimeout(resolve, 2000))
                 
             ])
+            // fetch does not throw for http error statuses so handle them here 
             if (!response.ok) throw new Error('Chat request failed')
 
             const data = await response.json()

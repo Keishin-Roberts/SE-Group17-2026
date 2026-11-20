@@ -1,3 +1,4 @@
+// display messages supplied by chatbox, whcih manages their state 
 function MessageList(props) {
     return (
         <>

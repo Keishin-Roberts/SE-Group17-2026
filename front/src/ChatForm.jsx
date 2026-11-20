@@ -1,3 +1,4 @@
+//display the message form using state and handlers supplied by chatbox
 function ChatForm(props) {
     return (
         <form className="chat-form" onSubmit={props.handleSubmit}>
