@@ -3,7 +3,7 @@ import MessageList from './MessageList.jsx'
 import ChatForm from './ChatForm.jsx'
 
 
-function ChatBox() {
+function ChatBox(props) {
     const [draft, setDraft] = useState('')
     const [messages, setMessages] = useState([])
     const historyRef = useRef(null)
@@ -67,7 +67,8 @@ function ChatBox() {
         if (typeof data.reply !== 'string') {
             throw new Error('Invalid chat response')
         }
-
+        // Update the badge immediately using the server's mood.
+        props.onMoodChange(data.mood)
         // Update only the user message belonging to this request.
         setMessages(previous => previous.map(message =>
             message.id === newMessage.id
