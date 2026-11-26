@@ -13,62 +13,90 @@ function ChatBox() {
         history.scrollTop = history.scrollHeight
     }, [messages])
     async function handleSubmit(event) {
-        // prevents browser refresh when the form is submitted
-        event.preventDefault()
+    event.preventDefault()
 
-        // remove surrounding whitespace and ignore empty messages
-        const text = draft.trim()
-        if (text === '') return
-        //give message a stable ID for React list key
-        const newMessage = {
-            id: crypto.randomUUID(),
-            author: 'user',
-            text: text
-        }
-        //show tempoprary message while waiting for servers response
-        const thinkingMessage = {
-            id: crypto.randomUUID(),
-            author: 'bot',
-            text: 'Steve is thinking...'
-        }
-        //add user message and the temporary think message
-        setMessages(previous => [...previous, newMessage, thinkingMessage])
-        //clear the draft so input is ready for the next message
-        setDraft('')
+    const text = draft.trim()
+    if (text === '') return
 
-        //store server response or error message
-        let replyText
-        try {
-            //runthe request and existing 2 second delay in parallel
-            const [response] = await Promise.all([
-                fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text })
-                }),
-                new Promise(resolve => setTimeout(resolve, 2000))
-                
-            ])
-            // fetch does not throw for http error statuses so handle them here 
-            if (!response.ok) throw new Error('Chat request failed')
+    // Store the send time once, when this message is created.
+    const newMessage = {
+        id: crypto.randomUUID(),
+        author: 'user',
+        text: text,
+        sentAt: new Date().toISOString(),
+        isRead: false
+    }
 
-            const data = await response.json()
-            replyText = data.reply
-        } catch {
-            replyText = 'Could not get a reply. Please try again.'
+    const thinkingMessage = {
+        id: crypto.randomUUID(),
+        author: 'bot',
+        text: 'Steve is thinking...'
+    }
+
+    setMessages(previous => [
+        ...previous,
+        newMessage,
+        thinkingMessage
+    ])
+    setDraft('')
+
+    // Keep the existing minimum two-second wait for Steve's reply.
+    const replyDelay = new Promise(resolve => {
+        setTimeout(resolve, 2000)
+    })
+
+    let replyText
+
+    try {
+        // Start the request immediately, but keep grey ticks briefly visible.
+        const [response] = await Promise.all([
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            }),
+            new Promise(resolve => setTimeout(resolve, 200))
+        ])
+
+        if (!response.ok) {
+            throw new Error('Chat request failed')
         }
-    // generate steve's message ussing servers reply or error message
+
+        const data = await response.json()
+
+        if (typeof data.reply !== 'string') {
+            throw new Error('Invalid chat response')
+        }
+
+        // Update only the user message belonging to this request.
+        setMessages(previous => previous.map(message =>
+            message.id === newMessage.id
+                ? { ...message, isRead: true }
+                : message
+        ))
+
+        // Show blue ticks before displaying the reply, even on slow requests.
+        await new Promise(resolve => setTimeout(resolve, 200))
+
+        replyText = data.reply
+    } catch {
+        replyText = 'Could not get a reply. Please try again.'
+    }
+
+    await replyDelay
+
     const replyMessage = {
         id: crypto.randomUUID(),
         author: 'bot',
-        text: replyText
+        text: replyText,
+        sentAt: new Date().toISOString()
     }
-    //replace think message with reply
+
+    // Replace this request's temporary thinking message.
     setMessages(previous => previous.map(message =>
         message.id === thinkingMessage.id ? replyMessage : message
     ))
-            
-    }
+}
     
     return (
         <main className="container">

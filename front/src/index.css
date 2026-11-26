@@ -304,3 +304,52 @@ body {
     transition: none;
   }
 }
+/* Reserve enough space for the timestamp and ticks. */
+.bubble {
+  box-sizing: border-box;
+  min-width: 5.5rem;
+  white-space: normal;
+}
+
+/* Preserve line breaks within the actual message text. */
+.bubble-text {
+  display: block;
+  white-space: pre-wrap;
+}
+
+/* Separate metadata row prevents overlap with message text. */
+.bubble-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.65rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.bubble-user .bubble-meta {
+  color: #c5d2e2;
+}
+
+.message-ticks {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: #b0bac6;
+}
+
+.message-ticks-read {
+  color: #67c7ff;
+}
+
+.message-ticks svg {
+  width: 22px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
