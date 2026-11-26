@@ -10,7 +10,8 @@ function isValidMood(value) {
 function App() {
     const [mood, setMood] = useState(50)
     const [isOnline, setIsOnline] = useState(false)
-
+    const [isResetting, setIsResetting] = useState(false)
+    const [resetError, setResetError] = useState('')
     // Prevent an older background check overwriting a newer chat update.
     const moodVersion = useRef(0)
 
@@ -21,7 +22,40 @@ function App() {
         setMood(value)
         setIsOnline(true)
     }
+      async function handleMoodReset() {
+        if (isResetting) return
 
+        setIsResetting(true)
+        setResetError('')
+
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 3000)
+
+        try {
+            const response = await fetch('/api/mood/reset', {
+                method: 'POST',
+                signal: controller.signal
+            })
+
+            if (!response.ok) {
+                throw new Error('Mood reset failed')
+            }
+
+            const data = await response.json()
+
+            if (data.mood !== 50) {
+                throw new Error('Unexpected reset response')
+            }
+
+            // Update the badge using the confirmed server value.
+            handleMoodChange(data.mood)
+        } catch {
+            setResetError('Could not reset mood. Please try again.')
+        } finally {
+            clearTimeout(timeout)
+            setIsResetting(false)
+        }
+    }
     useEffect(() => {
         let active = true
         let controller = null
@@ -82,7 +116,13 @@ function App() {
 
     return (
         <>
-            <MoodStatus mood={mood} isOnline={isOnline} />
+            <MoodStatus
+                mood={mood}
+                isOnline={isOnline}
+                onReset={handleMoodReset}
+                isResetting={isResetting}
+                resetError={resetError}
+            />
             <ChatBox onMoodChange={handleMoodChange} />
         </>
     )

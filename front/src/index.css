@@ -417,3 +417,60 @@ body {
     transition: none;
   }
 }
+/* Space for the controls and a possible error message. */
+#root {
+  padding-top: 96px;
+}
+
+/* Keep the badge and reset button together at the top-right. */
+.mood-controls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 32px);
+}
+
+/* The wrapper now positions the badge. */
+.mood-status {
+  position: static;
+}
+
+.mood-reset {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.mood-reset:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.mood-reset:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.mood-reset:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 3px;
+}
+
+.mood-reset-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #991b1b;
+  font-size: 0.75rem;
+}

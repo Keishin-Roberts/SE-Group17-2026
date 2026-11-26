@@ -1,4 +1,4 @@
-// Display connection status; mood controls only the background colour.
+// Display the status badge and its reset control.
 function MoodStatus(props) {
     let colour = 'mood-neutral'
 
@@ -15,10 +15,27 @@ function MoodStatus(props) {
     }
 
     return (
-        <div className={`mood-status ${colour}`} role="status">
-            {props.isOnline
-                ? 'Steve Jobs is online'
-                : 'Steve Jobs is offline'}
+        <div className="mood-controls">
+            <div className={`mood-status ${colour}`} role="status">
+                {props.isOnline
+                    ? 'Steve Jobs is online'
+                    : 'Steve Jobs is offline'}
+            </div>
+
+            <button
+                className="mood-reset"
+                type="button"
+                onClick={props.onReset}
+                disabled={!props.isOnline || props.isResetting}
+            >
+                {props.isResetting ? 'Resetting...' : 'Reset mood'}
+            </button>
+
+            {props.resetError && (
+                <p className="mood-reset-error" role="alert">
+                    {props.resetError}
+                </p>
+            )}
         </div>
     )
 }
