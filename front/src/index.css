@@ -9,11 +9,27 @@
 body {
   margin: 0;
   overflow: hidden;
+  /* How much the 1920 x 1080 design is scaled to fill the window, same as background-size: cover */
+  --wallpaper-scale: max(calc(100vw / 1920), calc(100vh / 1080));
+
   background-color: #f7f3eb;
-  background-image: url('./assets/steve_jobs_pastel_wallpaper.svg');
-  background-position: top right;
+
+  /* Two layers, the first is on top: Steve Jobs, then the pastel background */
+  background-image:
+    url('./assets/steve_jobs_portrait.svg'),
+    url('./assets/pastel_background.svg');
+
+  /* The portrait stays in the top right corner. To move it, change the two numbers (right, top). */
+  background-position:
+    right calc(60 * var(--wallpaper-scale)) top calc(50 * var(--wallpaper-scale)),
+    top right;
+
+  /* Portrait size is 480 x 660, the background fills the window */
+  background-size:
+    calc(480 * var(--wallpaper-scale)) calc(660 * var(--wallpaper-scale)),
+    cover;
+
   background-repeat: no-repeat;
-  background-size: cover;
   background-attachment: fixed;
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
