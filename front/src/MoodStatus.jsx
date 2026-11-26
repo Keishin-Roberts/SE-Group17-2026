@@ -1,24 +1,15 @@
+import { getMoodLevel } from './moodLevel.js'
+
 // Display the status badge and its reset control.
 function MoodStatus(props) {
-    let colour = 'mood-neutral'
-
-    if (!props.isOnline) {
-        colour = 'mood-offline'
-    } else if (props.mood >= 80) {
-        colour = 'mood-very-positive'
-    } else if (props.mood >= 60) {
-        colour = 'mood-positive'
-    } else if (props.mood <= 25) {
-        colour = 'mood-very-negative'
-    } else if (props.mood < 50) {
-        colour = 'mood-negative'
-    }
+    const level = getMoodLevel(props.mood)
+    const colour = props.isOnline ? level.badgeClass : 'mood-offline'
 
     return (
         <div className="mood-controls">
             <div className={`mood-status ${colour}`} role="status">
                 {props.isOnline
-                    ? 'Steve Jobs is online'
+                    ? `Steve Jobs is online · ${level.label}`
                     : 'Steve Jobs is offline'}
             </div>
 

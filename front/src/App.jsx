@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import ChatBox from './ChatBox.jsx'
 import MoodStatus from './MoodStatus.jsx'
+import { getMoodLevel } from './moodLevel.js'
+
+// Web addresses of all the faces of Steve Jobs, used to load them early.
+const faceUrls = import.meta.glob('./assets/steve_jobs_*.svg', {
+    eager: true,
+    query: '?url',
+    import: 'default'
+})
 
 // Accept only valid mood values returned by the server.
 function isValidMood(value) {
@@ -14,6 +22,19 @@ function App() {
     const [resetError, setResetError] = useState('')
     // Prevent an older background check overwriting a newer chat update.
     const moodVersion = useRef(0)
+
+    // Load every face once, so the picture does not flash when the mood changes.
+    useEffect(() => {
+        Object.values(faceUrls).forEach(url => {
+            new Image().src = url
+        })
+    }, [])
+
+    // Show the face that matches the mood. index.css picks the picture from data-mood.
+    // When the server is offline, Steve looks calm.
+    useEffect(() => {
+        document.body.dataset.mood = isOnline ? getMoodLevel(mood).name : 'calm'
+    }, [mood, isOnline])
 
     function handleMoodChange(value) {
         if (!isValidMood(value)) return

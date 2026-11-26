@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 480 660" width="100%" height="100%">
+  <defs>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#736658" flood-opacity="0.08"/>
+    </filter>
+
+    <linearGradient id="face-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="60%" stop-color="#F5EFE6"/>
+      <stop offset="100%" stop-color="#EAE0D2"/>
+    </linearGradient>
+
+    <linearGradient id="turtleneck-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3C3B3E"/>
+      <stop offset="40%" stop-color="#2D2C2F"/>
+      <stop offset="85%" stop-color="#37363A" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#4A494E" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="glasses-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78716A"/>
+      <stop offset="100%" stop-color="#44403C"/>
+    </linearGradient>
+
+    <linearGradient id="glass-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#D8E2E6" stop-opacity="0.25"/>
+    </linearGradient>
+  </defs>
+
+  <g id="steve-jobs">
+
+    <!-- Ambient backlight disc for portrait focus -->
+    <circle cx="200" cy="180" r="190" fill="#FFEBDD" opacity="0.85" filter="url(#soft-shadow)"/>
+
+    <!-- Turtleneck Collar & Shoulders -->
+    <g id="turtleneck">
+      <!-- Shoulders silhouette fading down -->
+      <path d="M 50,420 
+               C 80,330 130,300 160,290 
+               L 240,290 
+               C 270,300 320,330 350,420 
+               C 365,470 380,520 390,560 
+               L 10,560 
+               C 20,520 35,470 50,420 Z" 
+            fill="url(#turtleneck-grad)"/>
+
+      <!-- Turtleneck Ribbed High Collar -->
+      <path d="M 145,260 
+               C 145,250 160,242 200,242 
+               C 240,242 255,250 255,260 
+               L 252,305 
+               C 245,315 225,320 200,320 
+               C 175,320 155,315 148,305 Z" 
+            fill="#2B2A2D"/>
+      <!-- Collar subtle fold line -->
+      <path d="M 152,282 C 175,290 225,290 248,282" fill="none" stroke="#454449" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- Head & Neck Base Silhouette -->
+    <!-- Neck -->
+    <path d="M 165,210 L 165,265 C 185,272 215,272 235,265 L 235,210 Z" fill="#E5DACB"/>
+
+    <!-- Head Contour (Minimalist Stylized Shape) -->
+    <path d="M 135,135 
+             C 130,55 160,15 200,15 
+             C 240,15 270,55 265,135 
+             C 264,175 258,225 240,240 
+             C 225,252 175,252 160,240 
+             C 142,225 136,175 135,135 Z" 
+          fill="url(#face-gradient)" filter="url(#soft-shadow)"/>
+
+    <!-- Iconic Bald Crown & Temple subtle shading -->
+    <path d="M 136,120 C 133,58 162,18 200,18 C 238,18 267,58 264,120 C 255,50 225,28 200,28 C 175,28 145,50 136,120 Z" 
+          fill="#DDD2C1" opacity="0.45"/>
+
+    <!-- Ears -->
+    <!-- Left Ear -->
+    <path d="M 136,118 C 128,118 124,130 125,145 C 126,158 132,165 137,165" fill="#E8DEC8" stroke="#7A6F62" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Right Ear -->
+    <path d="M 264,118 C 272,118 276,130 275,145 C 274,158 268,165 263,165" fill="#E8DEC8" stroke="#7A6F62" stroke-width="1.8" stroke-linecap="round"/>
+
+    <!-- Signature Beard & Stubble Contour -->
+    <path d="M 137,150 
+             C 140,195 152,238 178,245 
+             C 192,249 208,249 222,245 
+             C 248,238 260,195 263,150 
+             C 255,162 248,168 238,168 
+             C 230,198 220,215 200,215 
+             C 180,215 170,198 162,168 
+             C 152,168 145,162 137,150 Z" 
+          fill="#78726B" opacity="0.88"/>
+
+    <!-- Lower Chin indentation -->
+    <path d="M 186,202 C 194,199 206,199 214,202" fill="none" stroke="#5E5852" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Mustache -->
+    <path d="M 175,174 C 188,172 196,177 200,180 C 204,177 212,172 225,174 C 218,184 207,186 200,186 C 193,186 182,184 175,174 Z" 
+          fill="#66615B"/>
+
+    <!-- Nose -->
+    <path d="M 199,105 L 197,148 C 197,154 191,156 187,156 L 203,156" 
+          fill="none" stroke="#8C8173" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Eyebrows -->
+    <path d="M 159,101 C 167,100 178,103 184,108" fill="none" stroke="#5E5852" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 216,108 C 222,103 233,100 241,101" fill="none" stroke="#5E5852" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Eyes -->
+    <path d="M 166,117 L 182,117" fill="none" stroke="#44403C" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="174" cy="120" r="2" fill="#2D2C2F"/>
+    
+    <path d="M 218,117 L 234,117" fill="none" stroke="#44403C" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="226" cy="120" r="2" fill="#2D2C2F"/>
+
+    <!-- Iconic Round Rimless Glasses -->
+    <circle cx="174" cy="118" r="20" fill="url(#glass-reflection)" stroke="url(#glasses-rim)" stroke-width="2.8"/>
+    <circle cx="226" cy="118" r="20" fill="url(#glass-reflection)" stroke="url(#glasses-rim)" stroke-width="2.8"/>
+    <path d="M 194,116 C 197,113 203,113 206,116" fill="none" stroke="url(#glasses-rim)" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M 154,117 L 135,123" fill="none" stroke="url(#glasses-rim)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 246,117 L 265,123" fill="none" stroke="url(#glasses-rim)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 164,106 A 16 16 0 0 1 180,106" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+    <path d="M 216,106 A 16 16 0 0 1 232,106" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- Subtle Minimalist Quote -->
+    <text x="200" y="360" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" letter-spacing="4" fill="#A89E92" text-transform="uppercase">Think Different</text>
+  </g>
+</svg>

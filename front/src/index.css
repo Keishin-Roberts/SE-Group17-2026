@@ -14,9 +14,9 @@ body {
 
   background-color: #f7f3eb;
 
-  /* Two layers, the first is on top: Steve Jobs, then the pastel background */
+  /* Two layers, the first is on top: Steve Jobs (calm face), then the pastel background */
   background-image:
-    url('./assets/steve_jobs_portrait.svg'),
+    url('./assets/steve_jobs_calm.svg'),
     url('./assets/pastel_background.svg');
 
   /* The portrait stays in the top right corner. To move it, change the two numbers (right, top). */
@@ -33,6 +33,38 @@ body {
   background-attachment: fixed;
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* The face of Steve Jobs follows his mood. App.jsx sets data-mood on the body,
+   levels come from moodLevel.js. Only the first layer changes. */
+body[data-mood='furious'] {
+  background-image:
+    url('./assets/steve_jobs_furious.svg'),
+    url('./assets/pastel_background.svg');
+}
+
+body[data-mood='annoyed'] {
+  background-image:
+    url('./assets/steve_jobs_annoyed.svg'),
+    url('./assets/pastel_background.svg');
+}
+
+body[data-mood='calm'] {
+  background-image:
+    url('./assets/steve_jobs_calm.svg'),
+    url('./assets/pastel_background.svg');
+}
+
+body[data-mood='happy'] {
+  background-image:
+    url('./assets/steve_jobs_happy.svg'),
+    url('./assets/pastel_background.svg');
+}
+
+body[data-mood='delighted'] {
+  background-image:
+    url('./assets/steve_jobs_delighted.svg'),
+    url('./assets/pastel_background.svg');
 }
 
 #root {
