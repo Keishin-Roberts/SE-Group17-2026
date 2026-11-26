@@ -4,8 +4,16 @@ const { findClosestKeyword } = require('../spelling')
 
 const router = express.Router()
 
-// Keywords and their answers: { "keyword": { "reply": "...", "mood": number } }
+// Topics: { "topic": { "keywords": [...], "replies": [...], "mood": number } }
 const conversation = require('../data/conversation.json')
+
+// Every keyword and the topic it belongs to, e.g. { "hi": "greeting", "woz": "wozniak" }
+const topicOfKeyword = {}
+for (const topic in conversation) {
+  for (const keyword of conversation[topic].keywords) {
+    topicOfKeyword[keyword] = topic
+  }
+}
 
 // Used when the message has no known keyword
 const defaultResponse = { reply: "That's not what we're here to talk about. Ask me something worth my time.", mood: -5 }
@@ -41,6 +49,17 @@ function pickRandom(list) {
 }
 
 /**
+ * Checks if the message has the keyword as a whole word,
+ * so "hi" matches "hi steve" but not "this" or "think".
+ * A plural "s" is allowed too, so "iphones" matches "iphone".
+ */
+function containsKeyword(message, keyword) {
+  // \b means the start or end of a word
+  const pattern = new RegExp('\\b' + keyword + 's?\\b')
+  return pattern.test(message)
+}
+
+/**
  * Picks a random complaint and says which word was misspelled.
  * Example: 'It\'s "iphone", not "iphnoe". Learn to spell.'
  */
@@ -57,20 +76,23 @@ router.post('/', (req, res) => {
   // Lower case so "iPhone" and "iphone" both match
   const userMessage = (req.body.message || '').toLowerCase()
 
-  // 1. Look for a keyword written correctly, the last match in the file wins
+  // 1. Look for a keyword written correctly. If several match, the longest one wins
+  //    because it is the most specific: "apple lisa" beats "apple", "your father" beats "father"
   let topic = null
-  for (const keyword in conversation) {
-    if (userMessage.includes(keyword)) {
-      topic = keyword
+  let matchedKeyword = ''
+  for (const keyword in topicOfKeyword) {
+    if (keyword.length > matchedKeyword.length && containsKeyword(userMessage, keyword)) {
+      topic = topicOfKeyword[keyword]
+      matchedKeyword = keyword
     }
   }
 
   // 2. No exact match, so check for a keyword with a small typo
   let typo = null
   if (topic === null) {
-    typo = findClosestKeyword(userMessage, Object.keys(conversation))
+    typo = findClosestKeyword(userMessage, Object.keys(topicOfKeyword))
     if (typo) {
-      topic = typo.keyword
+      topic = topicOfKeyword[typo.keyword]
     }
   }
 
@@ -87,11 +109,11 @@ router.post('/', (req, res) => {
     moodChange = -REPEAT_PENALTY
   } else if (typo) {
     // 5. Jobs still answers, but complains first and gets annoyed
-    reply = makeComplaint(typo.keyword, typo.typedText) + ' ' + conversation[topic].reply
+    reply = makeComplaint(typo.keyword, typo.typedText) + ' ' + pickRandom(conversation[topic].replies)
     moodChange = conversation[topic].mood - TYPO_PENALTY
   } else {
-    // 6. Normal answer
-    reply = conversation[topic].reply
+    // 6. Normal answer, one of the topic's replies picked at random
+    reply = pickRandom(conversation[topic].replies)
     moodChange = conversation[topic].mood
   }
 

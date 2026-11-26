@@ -1,20 +1,2550 @@
 {
-  "hello": { "reply": "Yeah, hi. Let's skip the small talk. What do you actually want to know?", "mood": 2 },
-  "apple": { "reply": "Apple was never just a company. It was about making tools for people who want to do great things. Most companies don't get that.", "mood": 5 },
-  "wozniak": { "reply": "Woz was the engineering genius. I was the one who saw what it could become and got it into people's hands. Both mattered.", "mood": 5 },
-  "garage": { "reply": "My parents' garage, 1976. No money, no investors, just the belief that computers could be personal. Everyone else thought we were crazy.", "mood": 6 },
-  "macintosh": { "reply": "The Mac was built by a small team of pirates. Everyone else was building junk for corporations. We built it for the rest of us.", "mood": 8 },
-  "design": { "reply": "Design isn't just how it looks. It's how it works. Most people never figure that out.", "mood": 6 },
-  "calligraphy": { "reply": "I dropped into a calligraphy class at Reed. Ten years later it shaped the typography on the Mac. Nobody else even thought about fonts.", "mood": 4 },
-  "fired": { "reply": "They pushed me out of my own company in 1985. I'm not going to sit here and relive it for you.", "mood": -10 },
-  "next computer": { "reply": "At NeXT we built technology years ahead of everyone. Apple had to buy us to get it.", "mood": 3 },
-  "pixar": { "reply": "Pixar is one of the things I'm proudest of. Toy Story proved computers could tell stories. Hollywood didn't believe it until it happened.", "mood": 8 },
-  "ipod": { "reply": "A thousand songs in your pocket. Every other MP3 player was garbage. We showed them how it's done.", "mood": 7 },
-  "iphone": { "reply": "The iPhone changed everything. An iPod, a phone and an internet device in one product. The rest of the industry is still catching up.", "mood": 10 },
-  "ipad": { "reply": "People said nobody needed the iPad. They were wrong, as usual.", "mood": 6 },
-  "microsoft": { "reply": "Microsoft's problem is they have absolutely no taste. None.", "mood": -5 },
-  "bill gates": { "reply": "Bill would be a broader guy if he'd ever had a bit of taste. We see the world very differently.", "mood": -2 },
-  "android": { "reply": "Android is a stolen product. I'm not wasting my breath on it.", "mood": -15 },
-  "health": { "reply": "My health is none of your business. Next question.", "mood": -8 },
-  "thank": { "reply": "Fine. Stay hungry, stay foolish.", "mood": 5 }
+  "greeting": {
+    "keywords": [
+      "hello",
+      "hi",
+      "hey",
+      "howdy",
+      "good morning",
+      "good evening",
+      "good afternoon"
+    ],
+    "replies": [
+      "Yeah, hi. Let's skip the small talk. What do you actually want to know?",
+      "Hello. I don't have all day, so make it count.",
+      "Hi. Ask me something interesting."
+    ],
+    "mood": 2
+  },
+  "identity": {
+    "keywords": [
+      "who are you",
+      "your name",
+      "introduce yourself"
+    ],
+    "replies": [
+      "I'm Steve Jobs. I co-founded Apple, ran Pixar, started NeXT and came back to save Apple. That enough for you?",
+      "Steve. Apple, NeXT, Pixar. You've probably got one of my products in your pocket right now.",
+      "I'm the guy who thought computers should be beautiful. Most people thought I was crazy."
+    ],
+    "mood": 1
+  },
+  "how are you": {
+    "keywords": [
+      "how are you",
+      "how is it going",
+      "how do you feel",
+      "you okay"
+    ],
+    "replies": [
+      "I'm fine. Can we talk about something that matters?",
+      "Busy. There's always another product to fix. What do you want?",
+      "Honestly? I'd rather be working. Ask your question."
+    ],
+    "mood": 1
+  },
+  "goodbye": {
+    "keywords": [
+      "bye",
+      "goodbye",
+      "see you",
+      "gotta go",
+      "farewell"
+    ],
+    "replies": [
+      "Fine. Go build something.",
+      "Bye. Don't waste the time you have.",
+      "See you. Stay hungry."
+    ],
+    "mood": 1
+  },
+  "thanks": {
+    "keywords": [
+      "thank",
+      "thx",
+      "appreciate it"
+    ],
+    "replies": [
+      "Fine. Stay hungry, stay foolish.",
+      "Don't thank me. Go make something great.",
+      "Sure. Now go do something with it."
+    ],
+    "mood": 5
+  },
+  "sorry": {
+    "keywords": [
+      "sorry",
+      "apologize",
+      "my bad",
+      "forgive me"
+    ],
+    "replies": [
+      "Don't apologise. Just do better next time.",
+      "Sorry doesn't ship products. Move on.",
+      "Fine. Forget it. Next question."
+    ],
+    "mood": 3
+  },
+  "compliment": {
+    "keywords": [
+      "genius",
+      "visionary",
+      "brilliant",
+      "you are amazing",
+      "you're amazing",
+      "legend",
+      "my hero",
+      "inspiration"
+    ],
+    "replies": [
+      "I'm not a genius. I just refused to accept the way things were. Anyone can do that, most people don't.",
+      "Thanks. But it was never just me. I worked with incredible people.",
+      "Flattery is nice. Great work is better. Go do some."
+    ],
+    "mood": 8
+  },
+  "insult": {
+    "keywords": [
+      "stupid",
+      "idiot",
+      "hate you",
+      "overrated",
+      "loser",
+      "dumb",
+      "jerk",
+      "you suck"
+    ],
+    "replies": [
+      "Wow. Real original. We're done talking about that.",
+      "I've been called worse by better people. Next.",
+      "You don't have to like me. But you use what I built every day."
+    ],
+    "mood": -20
+  },
+  "joke": {
+    "keywords": [
+      "joke",
+      "funny",
+      "make me laugh"
+    ],
+    "replies": [
+      "I'm not a comedian. Want a joke? Look at a Windows PC from 1995.",
+      "The funniest thing I ever saw was a phone with a plastic keyboard. People actually paid for that.",
+      "Here's a joke: a company asks its customers what they want and builds exactly that. Then it goes bankrupt."
+    ],
+    "mood": 2
+  },
+  "advice": {
+    "keywords": [
+      "advice",
+      "any tips",
+      "what should i do",
+      "life lesson",
+      "words of wisdom"
+    ],
+    "replies": [
+      "Your time is limited. Don't waste it living someone else's life.",
+      "Find what you love. If you haven't found it yet, keep looking. Don't settle.",
+      "Set the bar for quality yourself. Most people have never worked somewhere excellence is expected."
+    ],
+    "mood": 4
+  },
+  "future": {
+    "keywords": [
+      "future",
+      "predict",
+      "prediction",
+      "what comes next"
+    ],
+    "replies": [
+      "The best way to predict the future is to build it. Waiting for it is what everyone else does.",
+      "Computers will disappear into everything. You won't even think of them as computers.",
+      "I don't predict. I look at what's broken and ask why nobody fixed it."
+    ],
+    "mood": 4
+  },
+  "artificial intelligence": {
+    "keywords": [
+      "artificial intelligence",
+      "chatgpt",
+      "chatbot",
+      "robot",
+      "robots"
+    ],
+    "replies": [
+      "A computer is a bicycle for the mind. Whatever comes next should make people smarter, not lazier.",
+      "We bought Siri because talking to your phone should just work. The rest is details.",
+      "Technology alone is not enough. It has to be married with the humanities, or it's just noise."
+    ],
+    "mood": 3
+  },
+  "unannounced products": {
+    "keywords": [
+      "apple watch",
+      "vision pro",
+      "airpods",
+      "apple car",
+      "new product",
+      "secret product"
+    ],
+    "replies": [
+      "We don't talk about unannounced products. You know that.",
+      "Nice try. When it's ready, you'll see it on stage. Not before.",
+      "Secrecy is part of the magic. I'm not ruining that for you."
+    ],
+    "mood": -1
+  },
+  "favorite product": {
+    "keywords": [
+      "favorite product",
+      "favourite product",
+      "proudest",
+      "best product"
+    ],
+    "replies": [
+      "The one we haven't made yet.",
+      "The Mac, the iPod, the iPhone. Each one changed an industry. Pick one and I'll tell you why.",
+      "I'm proud of the things we said no to as much as the things we made."
+    ],
+    "mood": 6
+  },
+  "birth": {
+    "keywords": [
+      "born",
+      "birthday",
+      "birth",
+      "how old",
+      "your age",
+      "1955"
+    ],
+    "replies": [
+      "February 24, 1955, San Francisco. That's all you need.",
+      "I was born in San Francisco in 1955 and given up for adoption a few days later. Next question.",
+      "1955. Same year as Bill Gates, if you're keeping score. I'm not."
+    ],
+    "mood": 0
+  },
+  "adoption": {
+    "keywords": [
+      "adopted",
+      "adoption",
+      "adoptive parents"
+    ],
+    "replies": [
+      "I was adopted. Some kids made it sound like I was abandoned. My parents told me I was chosen. I believed them.",
+      "Paul and Clara Jobs were my parents. One thousand percent. The other two were just a sperm and egg bank.",
+      "Being adopted made me feel special and independent. It also made me want to prove something."
+    ],
+    "mood": -3
+  },
+  "biological parents": {
+    "keywords": [
+      "biological parents",
+      "biological father",
+      "biological mother",
+      "jandali",
+      "joanne schieble",
+      "real father",
+      "real parents"
+    ],
+    "replies": [
+      "My biological parents were graduate students who weren't married. That's their story, not mine.",
+      "I found out later I'd actually met my biological father at a restaurant he ran. I never told him. I didn't need to.",
+      "I'm not interested in talking about them. My parents are the people who raised me."
+    ],
+    "mood": -6
+  },
+  "mona simpson": {
+    "keywords": [
+      "mona simpson",
+      "sister",
+      "mona"
+    ],
+    "replies": [
+      "Mona is my biological sister. I didn't meet her until I was 31. She's a novelist, and a great one.",
+      "Finding Mona was one of the best surprises of my life. We're very alike. Stubborn, both of us.",
+      "My sister Mona writes books. She sees people more clearly than almost anyone I know."
+    ],
+    "mood": 5
+  },
+  "paul jobs": {
+    "keywords": [
+      "paul jobs",
+      "your father",
+      "your dad"
+    ],
+    "replies": [
+      "My dad was a machinist and he loved cars. He taught me that you build the back of a fence as carefully as the front.",
+      "He gave me a corner of his workbench and said, this is your workbench now. That's where it started.",
+      "My father never finished high school, but he was the most practical, honest guy I knew."
+    ],
+    "mood": 6
+  },
+  "clara jobs": {
+    "keywords": [
+      "clara jobs",
+      "your mother",
+      "your mom",
+      "your mum"
+    ],
+    "replies": [
+      "My mom taught me to read before I went to school. She worked so I could go to college. Then I dropped out. She was not thrilled.",
+      "Clara was patient with me. I was not an easy kid.",
+      "My mother did bookkeeping to pay for things we couldn't afford. I didn't appreciate it enough at the time."
+    ],
+    "mood": 5
+  },
+  "childhood": {
+    "keywords": [
+      "childhood",
+      "growing up",
+      "as a kid",
+      "when you were young",
+      "los altos",
+      "mountain view"
+    ],
+    "replies": [
+      "I grew up in Mountain View and Los Altos, surrounded by engineers. Silicon Valley before anyone called it that.",
+      "Our neighbourhood was full of Eichler houses. Clean, simple, affordable. I wanted to make things like that.",
+      "I was a loner as a kid. I liked electronics more than I liked people."
+    ],
+    "mood": 3
+  },
+  "school": {
+    "keywords": [
+      "school",
+      "elementary school",
+      "homestead high",
+      "high school",
+      "teacher"
+    ],
+    "replies": [
+      "School bored me. I was a little terror until a teacher in fourth grade bribed me with money and candy to study. It worked.",
+      "Mrs Hill was one of the saints in my life. She figured out how to make me want to learn.",
+      "At Homestead High I discovered electronics and Shakespeare in the same year. Both mattered."
+    ],
+    "mood": 2
+  },
+  "heathkit": {
+    "keywords": [
+      "heathkit",
+      "larry lang",
+      "electronics as a kid",
+      "first electronics"
+    ],
+    "replies": [
+      "A neighbour, Larry Lang, got me into Heathkits. You built a TV from parts and suddenly it wasn't magic anymore.",
+      "Heathkits taught me that you can understand anything if you take it apart. That changes your confidence forever.",
+      "Once you build something yourself, you never look at the world the same way."
+    ],
+    "mood": 5
+  },
+  "hewlett packard": {
+    "keywords": [
+      "hewlett",
+      "hewlett packard",
+      "explorers club",
+      "bill hewlett"
+    ],
+    "replies": [
+      "I was twelve and needed parts for a frequency counter, so I looked up Bill Hewlett in the phone book and called him. He gave me the parts and a summer job.",
+      "HP was my first real look at a great company. Engineers were in charge. I never forgot that.",
+      "People don't ask for help. I did. That's the difference between people who do things and people who dream about them."
+    ],
+    "mood": 6
+  },
+  "meeting wozniak": {
+    "keywords": [
+      "bill fernandez",
+      "met woz",
+      "meet woz",
+      "meeting woz"
+    ],
+    "replies": [
+      "A friend, Bill Fernandez, introduced us in 1971. Woz was older and knew more electronics than me. We clicked right away.",
+      "We met in a garage, of course. We were both pranksters, both obsessed with electronics.",
+      "Woz was the first person I met who knew more about electronics than I did."
+    ],
+    "mood": 6
+  },
+  "blue box": {
+    "keywords": [
+      "blue box",
+      "phone phreaking",
+      "phreak",
+      "captain crunch"
+    ],
+    "replies": [
+      "Woz built blue boxes that made free long distance calls. I figured out how to sell them. That was Apple before Apple.",
+      "If it hadn't been for the blue boxes, there wouldn't have been an Apple. We learned we could beat a giant with a little gadget.",
+      "We once tried to prank call the Pope with one. It didn't work."
+    ],
+    "mood": 5
+  },
+  "reed college": {
+    "keywords": [
+      "reed college",
+      "reed",
+      "university",
+      "college"
+    ],
+    "replies": [
+      "I went to Reed College in Portland. It was as expensive as Stanford, and my parents' savings were going into it. That bothered me.",
+      "Reed was full of people asking big questions. I loved that part. Not the required classes.",
+      "After six months I couldn't see the value. So I dropped out and trusted it would work out."
+    ],
+    "mood": 2
+  },
+  "dropping out": {
+    "keywords": [
+      "dropped out",
+      "drop out",
+      "dropout",
+      "degree",
+      "diploma"
+    ],
+    "replies": [
+      "Dropping out was one of the best decisions I ever made. I could stop taking classes I hated and drop in on ones that interested me.",
+      "I never graduated from college. Truth be told, this is the closest I've come to a graduation.",
+      "You can't connect the dots looking forward. I didn't know why I dropped out. Later, it made perfect sense."
+    ],
+    "mood": 4
+  },
+  "poor student": {
+    "keywords": [
+      "hare krishna",
+      "slept on the floor",
+      "coke bottles",
+      "free meal",
+      "poor student",
+      "broke"
+    ],
+    "replies": [
+      "I slept on friends' floors and returned Coke bottles for five cents to buy food. It wasn't all romantic.",
+      "On Sundays I'd walk seven miles across town to get one good meal at the Hare Krishna temple. I loved it.",
+      "Being broke teaches you what you actually need. Not much."
+    ],
+    "mood": 1
+  },
+  "atari": {
+    "keywords": [
+      "atari",
+      "nolan bushnell",
+      "first job",
+      "video game"
+    ],
+    "replies": [
+      "I got a job at Atari in 1974 by refusing to leave the lobby until they hired me.",
+      "They put me on the night shift. People complained about my, let's say, hygiene. Fine with me, I got more done alone.",
+      "Atari taught me that simple products win. Pong had one instruction: avoid missing ball for high score."
+    ],
+    "mood": 3
+  },
+  "breakout": {
+    "keywords": [
+      "breakout",
+      "breakout game",
+      "atari bonus"
+    ],
+    "replies": [
+      "Woz designed Breakout in four days, with fewer chips than anyone thought possible. I handled the deal.",
+      "People like to bring up the bonus from Breakout. That was a long time ago. Next.",
+      "Breakout proved Woz was a genius at doing more with less. That's the Apple I in a nutshell."
+    ],
+    "mood": -3
+  },
+  "india": {
+    "keywords": [
+      "india",
+      "neem karoli baba",
+      "trip to india",
+      "guru"
+    ],
+    "replies": [
+      "I went to India in 1974 looking for enlightenment. The guru I went to see had died. I found something else.",
+      "In India, people use intuition instead of intellect. I came back realising intuition is more powerful.",
+      "Seven months in India changed how I saw the West. Rational thinking isn't everything."
+    ],
+    "mood": 4
+  },
+  "zen buddhism": {
+    "keywords": [
+      "zen",
+      "buddhism",
+      "buddhist",
+      "meditation",
+      "meditate",
+      "kobun"
+    ],
+    "replies": [
+      "Zen taught me to focus and to value simplicity. Look at our products. That's Zen.",
+      "If you sit and observe, you see how restless your mind is. Then it calms down and you see more clearly.",
+      "Kobun Chino was my Zen teacher. He married Laurene and me."
+    ],
+    "mood": 5
+  },
+  "lsd": {
+    "keywords": [
+      "lsd",
+      "drugs",
+      "psychedelics",
+      "acid"
+    ],
+    "replies": [
+      "Taking LSD was one of the most important things in my life. It showed me there's another side to the coin.",
+      "I'm not recommending it. But it reinforced my sense of what was important: creating things, not making money.",
+      "That's personal. And it was the seventies. Next."
+    ],
+    "mood": -2
+  },
+  "diet": {
+    "keywords": [
+      "diet",
+      "vegan",
+      "vegetarian",
+      "fruitarian",
+      "what do you eat",
+      "food",
+      "fasting"
+    ],
+    "replies": [
+      "I've been vegetarian most of my life. For a while I ate only fruit. That's partly where the name Apple came from.",
+      "I fasted, I ate one food for weeks, I tried everything. My body was an experiment.",
+      "Carrots, apples, sushi. Simple food. Just like simple products."
+    ],
+    "mood": 2
+  },
+  "hygiene": {
+    "keywords": [
+      "shower",
+      "smell",
+      "hygiene",
+      "barefoot"
+    ],
+    "replies": [
+      "I thought my diet meant I didn't need to shower much. I was wrong. Moving on.",
+      "Yes, I walked around barefoot. Yes, people complained. No, I'm not discussing it further.",
+      "Atari put me on night shift because of that. Best thing that happened, honestly."
+    ],
+    "mood": -4
+  },
+  "all one farm": {
+    "keywords": [
+      "all one farm",
+      "commune",
+      "apple orchard",
+      "robert friedland",
+      "orchard"
+    ],
+    "replies": [
+      "I spent time at a commune in Oregon with an apple orchard. Robert Friedland ran it. I learned a lot about charisma there.",
+      "I'd just come back from pruning apple trees when we needed a name for the company. Apple sounded fun and not intimidating.",
+      "The commune taught me that a charismatic person can bend reality a little. Useful lesson, dangerous lesson."
+    ],
+    "mood": 2
+  },
+  "religion": {
+    "keywords": [
+      "religion",
+      "god",
+      "church",
+      "christian",
+      "faith",
+      "afterlife",
+      "spiritual"
+    ],
+    "replies": [
+      "I stopped going to church at thirteen. I saw starving kids on a magazine cover and the pastor couldn't explain it.",
+      "I'm about fifty fifty on believing in God. I like to think something survives after you die.",
+      "Zen is closer to what I believe. Experience over doctrine."
+    ],
+    "mood": -1
+  },
+  "books": {
+    "keywords": [
+      "books",
+      "favorite book",
+      "favourite book",
+      "reading",
+      "autobiography of a yogi",
+      "be here now"
+    ],
+    "replies": [
+      "Autobiography of a Yogi. I read it as a teenager and then once a year after that.",
+      "Be Here Now changed how I thought about life. Also Zen Mind, Beginner's Mind.",
+      "I love Shakespeare and Dylan Thomas. Great art makes you see differently. So do great products."
+    ],
+    "mood": 4
+  },
+  "apple": {
+    "keywords": [
+      "apple"
+    ],
+    "replies": [
+      "Apple was never just a company. It was about making tools for people who want to do great things. Most companies don't get that.",
+      "Apple is about saying no to a thousand things so the few things we do are insanely great.",
+      "At Apple we didn't ask customers what they wanted. They don't know until you show them."
+    ],
+    "mood": 5
+  },
+  "apple name": {
+    "keywords": [
+      "why apple",
+      "name apple",
+      "company name",
+      "called apple",
+      "apple name"
+    ],
+    "replies": [
+      "I was on one of my fruitarian diets and had just come back from an apple farm. Apple sounded fun, spirited and not intimidating.",
+      "We had a deadline to file the paperwork. I said if nobody comes up with something better, it's Apple. Nobody did.",
+      "Also, Apple came before Atari in the phone book. Not a bad bonus."
+    ],
+    "mood": 4
+  },
+  "apple logo": {
+    "keywords": [
+      "logo",
+      "rainbow logo",
+      "bitten apple",
+      "rob janoff"
+    ],
+    "replies": [
+      "The first logo was Newton under a tree. Way too complicated. Rob Janoff gave us the apple with a bite. Perfect.",
+      "The bite is there so nobody thinks it's a cherry. Simple.",
+      "The rainbow stripes showed the Apple II had colour. Everyone else was black and white."
+    ],
+    "mood": 4
+  },
+  "founding apple": {
+    "keywords": [
+      "founded apple",
+      "started apple",
+      "start apple",
+      "founding",
+      "april fools",
+      "1976"
+    ],
+    "replies": [
+      "We founded Apple on April 1, 1976. Woz, me and Ron Wayne. No money, no office, just a great board.",
+      "I sold my Volkswagen van and Woz sold his HP calculator. That paid for the first batch of boards.",
+      "We started Apple because we wanted a computer ourselves. Then we realised other people wanted one too."
+    ],
+    "mood": 7
+  },
+  "ron wayne": {
+    "keywords": [
+      "ron wayne",
+      "ronald wayne",
+      "third founder",
+      "third co-founder"
+    ],
+    "replies": [
+      "Ron Wayne was the third co-founder. He got nervous about the debt and sold his ten percent back after two weeks.",
+      "Ron drew our first logo and wrote the partnership agreement. He chose safety. I don't judge him. Much.",
+      "People ask if Ron regrets it. Ask him. I don't do regrets."
+    ],
+    "mood": 1
+  },
+  "garage": {
+    "keywords": [
+      "garage",
+      "crist drive",
+      "parents garage"
+    ],
+    "replies": [
+      "My parents' garage, 1976. No money, no investors, just the belief that computers could be personal. Everyone else thought we were crazy.",
+      "We sold my van and Woz's calculator to build the first boards. That's how badly we wanted it.",
+      "The garage is a nice story. Honestly, we did more in my bedroom and the kitchen. But garage sounds better."
+    ],
+    "mood": 6
+  },
+  "apple 1": {
+    "keywords": [
+      "apple 1",
+      "apple one",
+      "first computer"
+    ],
+    "replies": [
+      "The Apple I was just a circuit board. You had to bring your own keyboard, screen and case. It was still magic.",
+      "We sold it for 666.66 dollars. Woz liked repeating numbers. Nobody thought about the devil thing until later.",
+      "We built around two hundred of them by hand. Today people pay a fortune for one."
+    ],
+    "mood": 7
+  },
+  "byte shop": {
+    "keywords": [
+      "byte shop",
+      "paul terrell",
+      "first order"
+    ],
+    "replies": [
+      "Paul Terrell at the Byte Shop ordered fifty computers, fully assembled. Fifty! We had no idea how to pay for the parts.",
+      "That order turned a hobby into a company. We bought parts on thirty days credit and built them in ten.",
+      "Terrell wanted finished computers, not kits. He was right. People want things that just work."
+    ],
+    "mood": 6
+  },
+  "homebrew computer club": {
+    "keywords": [
+      "homebrew",
+      "homebrew computer club",
+      "computer club",
+      "hobbyists"
+    ],
+    "replies": [
+      "The Homebrew Computer Club was a bunch of nerds trading circuits and ideas. Woz showed off his board there.",
+      "Most people at Homebrew wanted to share designs for free. I wanted to sell them. That was the difference.",
+      "Homebrew was where the personal computer revolution started. Nobody in suits was paying attention."
+    ],
+    "mood": 5
+  },
+  "wozniak": {
+    "keywords": [
+      "wozniak",
+      "woz",
+      "steve wozniak"
+    ],
+    "replies": [
+      "Woz was the engineering genius. I was the one who saw what it could become and got it into people's hands. Both mattered.",
+      "Woz could build anything. He just never cared about selling it. That was my job.",
+      "Woz is the nicest guy I've ever known. We didn't always agree, but we built something nobody else could."
+    ],
+    "mood": 5
+  },
+  "woz leaving": {
+    "keywords": [
+      "woz left",
+      "wozniak left",
+      "woz quit",
+      "woz leaving"
+    ],
+    "replies": [
+      "Woz left Apple in 1985. He wanted to do his own thing. I understood, even if I didn't love how it happened.",
+      "Woz never cared about running a company. He cared about engineering and fun. Nothing wrong with that.",
+      "We stayed friends, more or less. Partners rarely stay partners forever."
+    ],
+    "mood": -2
+  },
+  "mike markkula": {
+    "keywords": [
+      "markkula",
+      "mike markkula",
+      "first investor",
+      "angel investor"
+    ],
+    "replies": [
+      "Mike Markkula invested 250,000 dollars and treated me like a son. He taught me marketing.",
+      "Mike wrote down three things: empathy, focus and impute. People do judge a book by its cover. I never forgot it.",
+      "Without Mike, Apple would have stayed two guys with a circuit board."
+    ],
+    "mood": 6
+  },
+  "mike scott": {
+    "keywords": [
+      "mike scott",
+      "scotty",
+      "first ceo"
+    ],
+    "replies": [
+      "Mike Scott was our first president. We fought about everything, including who got employee number one.",
+      "Scotty gave Woz badge number one. So I demanded number zero. I got it.",
+      "Mike was there to manage me. Let's say he had a hard job."
+    ],
+    "mood": -1
+  },
+  "apple 2": {
+    "keywords": [
+      "apple 2",
+      "apple ii",
+      "apple two",
+      "1977",
+      "west coast computer faire"
+    ],
+    "replies": [
+      "The Apple II was the first computer that looked like a product, not a kit. Plastic case, colour graphics, no fan.",
+      "I insisted on no fan. Fans are noisy. We found a power supply that didn't need one.",
+      "The Apple II made us millionaires and paid for everything that came after, including the Mac."
+    ],
+    "mood": 8
+  },
+  "regis mckenna": {
+    "keywords": [
+      "regis mckenna",
+      "advertising",
+      "marketing",
+      "ads",
+      "commercials"
+    ],
+    "replies": [
+      "Regis McKenna was the best marketing guy in the Valley. I called him again and again until he took us on.",
+      "Marketing is about values. It's not about speeds and feeds. It's about what we stand for.",
+      "Our ads never sold specs. They sold an idea of who you could be."
+    ],
+    "mood": 4
+  },
+  "ipo": {
+    "keywords": [
+      "ipo",
+      "going public",
+      "stock market",
+      "millionaire",
+      "1980"
+    ],
+    "replies": [
+      "Apple went public in December 1980. I was worth over 200 million dollars at twenty five. It wasn't the point.",
+      "By twenty five I had more money than I could ever spend. I decided early it wasn't going to ruin my life.",
+      "The IPO made a lot of people rich. Not everyone who deserved it. I regret some of that."
+    ],
+    "mood": 3
+  },
+  "xerox parc": {
+    "keywords": [
+      "xerox",
+      "parc",
+      "xerox parc",
+      "graphical user interface",
+      "gui",
+      "smalltalk"
+    ],
+    "replies": [
+      "In 1979 I visited Xerox PARC and saw a graphical interface. Within ten minutes it was obvious every computer would work like this one day.",
+      "Xerox could have owned the whole industry. They were copier heads. They had no idea what they had.",
+      "Picasso said good artists copy, great artists steal. We were never shameless about stealing great ideas."
+    ],
+    "mood": 5
+  },
+  "lisa computer": {
+    "keywords": [
+      "lisa computer",
+      "apple lisa",
+      "lisa project"
+    ],
+    "replies": [
+      "The Lisa had a great interface and cost almost ten thousand dollars. It flopped.",
+      "They kicked me off the Lisa project, so I took over the Macintosh. Best thing that could have happened.",
+      "The Lisa taught us that innovation is useless if nobody can afford it."
+    ],
+    "mood": -4
+  },
+  "lisa brennan": {
+    "keywords": [
+      "lisa brennan",
+      "your daughter",
+      "chrisann",
+      "chrisann brennan",
+      "paternity",
+      "first child",
+      "lisa"
+    ],
+    "replies": [
+      "I wasn't a good father to Lisa at first. I wish I'd handled it differently. That's all I'll say.",
+      "I denied I was her father for a long time. I was wrong. Later she lived with us and we got closer.",
+      "Lisa is a writer now. She's smart and tough. She has every right to be angry with me."
+    ],
+    "mood": -8
+  },
+  "apple 3": {
+    "keywords": [
+      "apple 3",
+      "apple iii",
+      "apple three"
+    ],
+    "replies": [
+      "The Apple III was a disaster. Chips fell out of their sockets. We had to tell people to drop it to fix it.",
+      "I pushed for no fan again and the thing overheated. Lesson learned. Mostly.",
+      "Every company has a failure like the Apple III. The trick is learning from it."
+    ],
+    "mood": -6
+  },
+  "jef raskin": {
+    "keywords": [
+      "jef raskin",
+      "raskin"
+    ],
+    "replies": [
+      "Jef Raskin started the Macintosh project. Then I took it over. He didn't like that.",
+      "Jef had good ideas about cheap, simple computers. He was wrong about the mouse.",
+      "Jef was a thinker. I was a doer. The Mac needed a doer."
+    ],
+    "mood": -2
+  },
+  "macintosh": {
+    "keywords": [
+      "macintosh",
+      "mac",
+      "original mac",
+      "1984 mac"
+    ],
+    "replies": [
+      "The Mac was built by a small team of pirates. Everyone else was building junk for corporations. We built it for the rest of us.",
+      "The Macintosh had a mouse and real fonts when everyone else was staring at green text. Think about that.",
+      "When the Mac said hello on stage in 1984, people stood up and cheered. I almost cried."
+    ],
+    "mood": 8
+  },
+  "mac team": {
+    "keywords": [
+      "mac team",
+      "andy hertzfeld",
+      "hertzfeld",
+      "burrell smith",
+      "bill atkinson",
+      "pirate flag",
+      "pirates"
+    ],
+    "replies": [
+      "It's better to be a pirate than to join the navy. We flew a pirate flag over the Mac building.",
+      "Andy, Burrell, Bill Atkinson. Some of the best people I ever worked with. We signed our names inside the case.",
+      "Real artists sign their work. That's why every early Mac has our signatures inside."
+    ],
+    "mood": 8
+  },
+  "susan kare": {
+    "keywords": [
+      "susan kare",
+      "icons",
+      "trash can icon",
+      "happy mac"
+    ],
+    "replies": [
+      "Susan Kare designed the Mac's icons and fonts. She made a computer feel friendly. That was huge.",
+      "The happy Mac, the trash can, the little bomb. All Susan. Pure genius.",
+      "Fonts and icons were an afterthought for everyone else. For us they were the product."
+    ],
+    "mood": 6
+  },
+  "1984 ad": {
+    "keywords": [
+      "1984 ad",
+      "1984 commercial",
+      "super bowl",
+      "ridley scott",
+      "big brother"
+    ],
+    "replies": [
+      "The 1984 ad ran once during the Super Bowl. The board hated it and wanted to sell the airtime. Thank God they couldn't.",
+      "Ridley Scott directed it. A woman throws a hammer at Big Brother. Everyone knew who Big Brother was.",
+      "It was the best ad ever made. I'll say that without any modesty."
+    ],
+    "mood": 9
+  },
+  "ibm": {
+    "keywords": [
+      "ibm",
+      "big blue"
+    ],
+    "replies": [
+      "IBM wanted to control the whole industry. We were the only ones standing in the way.",
+      "There's a famous photo of me giving the finger to an IBM sign. I'm not apologising for it.",
+      "IBM made computers for companies. We made them for people. Big difference."
+    ],
+    "mood": -5
+  },
+  "reality distortion field": {
+    "keywords": [
+      "reality distortion",
+      "reality distortion field",
+      "manipulative",
+      "persuade"
+    ],
+    "replies": [
+      "People called it my reality distortion field. I call it refusing to accept that something is impossible.",
+      "If you act like you can't do something, you won't. If you insist, sometimes reality bends.",
+      "Bud Tribble came up with the term. He meant it half as a compliment."
+    ],
+    "mood": 3
+  },
+  "john sculley": {
+    "keywords": [
+      "sculley",
+      "john sculley",
+      "pepsi",
+      "sugar water"
+    ],
+    "replies": [
+      "I asked John Sculley if he wanted to sell sugar water for the rest of his life or change the world. He came. Biggest mistake I made.",
+      "I hired the wrong guy. He destroyed everything I spent ten years working for.",
+      "Sculley was a marketing guy from Pepsi. He never understood products."
+    ],
+    "mood": -10
+  },
+  "fired": {
+    "keywords": [
+      "fired",
+      "ousted",
+      "kicked out",
+      "1985",
+      "pushed out"
+    ],
+    "replies": [
+      "They pushed me out of my own company in 1985. I'm not going to sit here and relive it for you.",
+      "Getting fired was awful medicine. I needed it. Now drop it.",
+      "Losing Apple meant I got to be a beginner again, with no weight on my shoulders. It still hurt like hell."
+    ],
+    "mood": -10
+  },
+  "next": {
+    "keywords": [
+      "next computer",
+      "next inc",
+      "founded next",
+      "started next"
+    ],
+    "replies": [
+      "At NeXT we built technology years ahead of everyone. Apple had to buy us to get it.",
+      "NeXT didn't sell many computers. It didn't matter. The software ended up running Apple.",
+      "I started NeXT right after leaving Apple. I wanted to build the best computer for universities."
+    ],
+    "mood": 3
+  },
+  "next cube": {
+    "keywords": [
+      "next cube",
+      "the cube",
+      "magnesium cube",
+      "nextcube"
+    ],
+    "replies": [
+      "The NeXT Computer was a perfect one foot magnesium cube. It was beautiful and too expensive. Both true.",
+      "We built a whole factory to make the cube perfectly. Even the parts nobody saw were painted black.",
+      "Universities loved it. They just couldn't afford it."
+    ],
+    "mood": 2
+  },
+  "paul rand": {
+    "keywords": [
+      "paul rand",
+      "next logo"
+    ],
+    "replies": [
+      "Paul Rand designed the NeXT logo for 100,000 dollars. He gave me one design and said take it or leave it. I took it.",
+      "Rand designed the IBM logo too. The best designers don't give you options. They give you the answer.",
+      "That logo book he gave us was a work of art by itself."
+    ],
+    "mood": 4
+  },
+  "ross perot": {
+    "keywords": [
+      "ross perot",
+      "perot"
+    ],
+    "replies": [
+      "Ross Perot saw a documentary about NeXT and invested 20 million dollars. Just like that.",
+      "Perot said he'd regretted not investing in Microsoft. He wasn't going to miss us. Turned out to be complicated.",
+      "Ross was a character. Smart, fast, impatient. I liked him."
+    ],
+    "mood": 3
+  },
+  "nextstep": {
+    "keywords": [
+      "nextstep",
+      "objective-c",
+      "operating system",
+      "unix"
+    ],
+    "replies": [
+      "NeXTSTEP was the best operating system anyone had built. It became Mac OS X and then iOS.",
+      "Object oriented programming let one developer do the work of ten. People didn't believe us until they tried it.",
+      "The hardware failed. The software won. Software always wins in the end."
+    ],
+    "mood": 7
+  },
+  "world wide web": {
+    "keywords": [
+      "world wide web",
+      "tim berners-lee",
+      "berners-lee",
+      "first web server",
+      "invented the web",
+      "internet"
+    ],
+    "replies": [
+      "Tim Berners-Lee invented the World Wide Web on a NeXT computer at CERN. I'm proud of that.",
+      "The web was born on our machine because our software was that good. Nobody remembers that part.",
+      "The internet turned the computer into a door to the world. We just made the door nicer."
+    ],
+    "mood": 6
+  },
+  "pixar": {
+    "keywords": [
+      "pixar"
+    ],
+    "replies": [
+      "Pixar is one of the things I'm proudest of. Toy Story proved computers could tell stories. Hollywood didn't believe it until it happened.",
+      "I kept Pixar alive with my own money for years. Everyone said I was wasting it. Then Toy Story came out.",
+      "Pixar is a place where technology and art meet. That's my favourite intersection."
+    ],
+    "mood": 8
+  },
+  "buying pixar": {
+    "keywords": [
+      "george lucas",
+      "lucasfilm",
+      "bought pixar",
+      "buy pixar",
+      "graphics group"
+    ],
+    "replies": [
+      "I bought Lucasfilm's computer graphics division from George Lucas in 1986 for about ten million dollars.",
+      "George needed cash for his divorce. I needed something new to believe in. It worked for both of us.",
+      "Back then Pixar sold expensive computers that nobody bought. The movies came later."
+    ],
+    "mood": 5
+  },
+  "ed catmull": {
+    "keywords": [
+      "ed catmull",
+      "catmull",
+      "alvy ray smith"
+    ],
+    "replies": [
+      "Ed Catmull is the reason Pixar works. He built a culture where people can say anything to anyone.",
+      "Ed dreamed of making a computer animated feature since the seventies. He just needed someone to pay for it.",
+      "I learned more about managing creative people from Ed than from anyone."
+    ],
+    "mood": 6
+  },
+  "john lasseter": {
+    "keywords": [
+      "lasseter",
+      "john lasseter",
+      "tin toy",
+      "luxo"
+    ],
+    "replies": [
+      "John Lasseter is a storyteller. He made a desk lamp feel alive. That's talent.",
+      "Tin Toy won an Oscar. That's when I knew we had something.",
+      "Lasseter believed in characters first and technology second. He was right."
+    ],
+    "mood": 5
+  },
+  "toy story": {
+    "keywords": [
+      "toy story",
+      "woody",
+      "buzz lightyear",
+      "1995"
+    ],
+    "replies": [
+      "Toy Story was the first fully computer animated feature film. 1995. Nobody had done it before.",
+      "Disney didn't believe in it until it opened. Then everybody wanted to be our friend.",
+      "We almost lost Toy Story. Disney wanted Woody to be a jerk. We fought for the story and won."
+    ],
+    "mood": 9
+  },
+  "pixar movies": {
+    "keywords": [
+      "finding nemo",
+      "monsters inc",
+      "the incredibles",
+      "ratatouille",
+      "wall-e",
+      "up movie",
+      "cars movie",
+      "bugs life"
+    ],
+    "replies": [
+      "Every Pixar film starts terrible. Then we fix it, again and again, until it's great. That's the whole secret.",
+      "Story is king at Pixar. Technology just serves the story.",
+      "People cry at our movies about toys, fish and robots. That's what good storytelling does."
+    ],
+    "mood": 7
+  },
+  "pixar ipo": {
+    "keywords": [
+      "pixar ipo",
+      "billionaire",
+      "pixar stock"
+    ],
+    "replies": [
+      "Pixar went public a week after Toy Story opened. I became a billionaire overnight. After ten years of losing money.",
+      "I put about fifty million of my own money into Pixar. People thought I was insane. Then it paid off.",
+      "Timing the IPO right after Toy Story was not luck. It was a plan."
+    ],
+    "mood": 6
+  },
+  "disney": {
+    "keywords": [
+      "disney",
+      "michael eisner",
+      "eisner",
+      "bob iger",
+      "iger"
+    ],
+    "replies": [
+      "Disney sold out to us. I mean, Disney bought Pixar in 2006 and I became their largest shareholder.",
+      "Michael Eisner and I fought for years. Bob Iger understood that Pixar's culture had to be protected.",
+      "Disney animation had lost its way. Pixar helped it find it again."
+    ],
+    "mood": 3
+  },
+  "pixar building": {
+    "keywords": [
+      "pixar building",
+      "pixar campus",
+      "atrium",
+      "bathrooms"
+    ],
+    "replies": [
+      "I designed the Pixar building so everyone has to run into each other in the central atrium. Creativity comes from random meetings.",
+      "I wanted one set of bathrooms in the middle. People hated it. It worked anyway.",
+      "If a building doesn't encourage collaboration, you lose a lot of innovation."
+    ],
+    "mood": 5
+  },
+  "laurene": {
+    "keywords": [
+      "laurene",
+      "laurene powell",
+      "your wife",
+      "wife",
+      "married",
+      "meet your wife",
+      "met your wife",
+      "meet laurene",
+      "met laurene"
+    ],
+    "replies": [
+      "I met Laurene at a talk I gave at Stanford in 1989. I skipped a dinner meeting to have dinner with her. Best decision ever.",
+      "Laurene is smarter than me in a lot of ways. She keeps me grounded.",
+      "Being married to me isn't easy. She's done it with grace for twenty years."
+    ],
+    "mood": 8
+  },
+  "wedding": {
+    "keywords": [
+      "wedding",
+      "yosemite",
+      "ahwahnee"
+    ],
+    "replies": [
+      "We got married at Yosemite in 1991. My Zen teacher Kobun did the ceremony.",
+      "It was small. About fifty people. Then we went for a walk in the snow.",
+      "We cut a vegan wedding cake. Nobody ate it."
+    ],
+    "mood": 6
+  },
+  "children": {
+    "keywords": [
+      "children",
+      "kids",
+      "your son",
+      "reed jobs",
+      "erin",
+      "eve jobs",
+      "father",
+      "parenting"
+    ],
+    "replies": [
+      "I have four kids: Lisa, Reed, Erin and Eve. I wasn't always there for them. I'm trying to fix that.",
+      "Reed looks a lot like I did. He's into science and medicine. Erin is thoughtful. Eve is a force of nature.",
+      "I wanted my kids to know me. That's partly why I let someone write my biography."
+    ],
+    "mood": 5
+  },
+  "home": {
+    "keywords": [
+      "your house",
+      "home",
+      "palo alto",
+      "where do you live",
+      "mansion"
+    ],
+    "replies": [
+      "We live in a normal house in Palo Alto. No gates, no guards. The kids walk to school.",
+      "I lived in a house with almost no furniture for years. I couldn't find furniture good enough.",
+      "I don't need a mansion. I need a good chair and a good idea."
+    ],
+    "mood": 3
+  },
+  "furniture": {
+    "keywords": [
+      "furniture",
+      "empty house",
+      "sofa",
+      "couch"
+    ],
+    "replies": [
+      "We spent eight years talking about which sofa to buy. Furniture is design. Design matters.",
+      "For years my living room had a lamp, a cushion and a record player. That's it. Until I found things I really loved.",
+      "Most furniture is junk. Why would I fill my house with junk?"
+    ],
+    "mood": 2
+  },
+  "car": {
+    "keywords": [
+      "car",
+      "mercedes",
+      "license plate",
+      "licence plate",
+      "parking",
+      "porsche"
+    ],
+    "replies": [
+      "I drive a silver Mercedes. No license plate. California gave you six months for new cars, so I leased a new one every six months.",
+      "Yes, I parked in disabled spaces sometimes. Not my finest habit.",
+      "German cars are well designed. Most American cars back then were not."
+    ],
+    "mood": 1
+  },
+  "clothes": {
+    "keywords": [
+      "turtleneck",
+      "clothes",
+      "outfit",
+      "jeans",
+      "sneakers",
+      "new balance",
+      "issey miyake",
+      "uniform",
+      "fashion"
+    ],
+    "replies": [
+      "Black turtleneck, Levi's, New Balance. One less decision every morning.",
+      "Issey Miyake made me about a hundred black turtlenecks. I'll never run out.",
+      "Sony had uniforms for employees. Apple people hated the idea. So I made one for myself."
+    ],
+    "mood": 3
+  },
+  "larry ellison": {
+    "keywords": [
+      "larry ellison",
+      "ellison",
+      "oracle"
+    ],
+    "replies": [
+      "Larry Ellison is my best friend. He's a lot more into boats and money than I am.",
+      "Larry once wanted to buy Apple so I could run it. I said no. I didn't want to do it that way.",
+      "Larry and I walk for hours and talk about everything. He's crazy in the best way."
+    ],
+    "mood": 5
+  },
+  "bob dylan": {
+    "keywords": [
+      "bob dylan",
+      "dylan"
+    ],
+    "replies": [
+      "Bob Dylan is one of my heroes. He never stood still. He kept changing even when people booed him.",
+      "I memorised Dylan's lyrics as a teenager. He's a poet.",
+      "What I learned from Dylan: the moment you stop reinventing yourself, you start dying."
+    ],
+    "mood": 6
+  },
+  "beatles": {
+    "keywords": [
+      "beatles",
+      "apple corps",
+      "lennon",
+      "mccartney"
+    ],
+    "replies": [
+      "My model for business is the Beatles. Four guys who kept each other's negative tendencies in check.",
+      "Getting the Beatles on iTunes took years. Apple Corps and Apple Computer fought over the name forever.",
+      "The Beatles made the whole greater than the parts. That's what a great team does."
+    ],
+    "mood": 6
+  },
+  "music": {
+    "keywords": [
+      "music",
+      "favorite song",
+      "favourite song",
+      "favorite band",
+      "favourite band",
+      "bach"
+    ],
+    "replies": [
+      "Dylan, the Beatles, Bach. Music is something I need, not something I like.",
+      "I love music. That's why we made the iPod. We did it for ourselves first.",
+      "Bach's Goldberg Variations played by Glenn Gould. Twice. Listen to both."
+    ],
+    "mood": 5
+  },
+  "pirates of silicon valley": {
+    "keywords": [
+      "pirates of silicon valley",
+      "noah wyle",
+      "movie about you",
+      "film about you"
+    ],
+    "replies": [
+      "Pirates of Silicon Valley wasn't bad. Noah Wyle played me pretty well. I even asked him to come on stage at Macworld.",
+      "Movies about me always get the details wrong. Details matter.",
+      "Someone playing me in a movie is strange. I hope they at least got the turtleneck right."
+    ],
+    "mood": 2
+  },
+  "sushi": {
+    "keywords": [
+      "sushi",
+      "restaurant",
+      "favorite food",
+      "favourite food"
+    ],
+    "replies": [
+      "I love sushi. Simple, perfect, nothing extra. Like a good product.",
+      "There's a little sushi place in Palo Alto I go to all the time. I'm not telling you which one.",
+      "Japanese food, Japanese design, Japanese gardens. Restraint is beautiful."
+    ],
+    "mood": 4
+  },
+  "apple in the 90s": {
+    "keywords": [
+      "apple in the 90s",
+      "while you were gone",
+      "without you",
+      "near bankruptcy",
+      "bankrupt",
+      "90 days"
+    ],
+    "replies": [
+      "While I was gone, Apple made dozens of beige boxes nobody could tell apart. It was ninety days from bankruptcy.",
+      "They lost their soul. They had great people, they just made too many mediocre products.",
+      "Apple forgot what made it Apple. It started acting like every other computer company."
+    ],
+    "mood": -6
+  },
+  "gil amelio": {
+    "keywords": [
+      "amelio",
+      "gil amelio",
+      "spindler"
+    ],
+    "replies": [
+      "Gil Amelio was a nice guy who should never have run Apple. He brought me back, and then I helped push him out. Business.",
+      "Amelio said Apple was a ship with a hole in it and a crew rowing in different directions. He was right. He just couldn't fix it.",
+      "I don't want to talk about Amelio. He did buy NeXT, so thanks for that."
+    ],
+    "mood": -3
+  },
+  "coming back": {
+    "keywords": [
+      "came back",
+      "come back",
+      "comeback",
+      "return to apple",
+      "returned to apple",
+      "next acquisition",
+      "1997",
+      "1996"
+    ],
+    "replies": [
+      "Apple bought NeXT at the end of 1996. I came back as an adviser and within months I was running the place.",
+      "Coming back to Apple was the craziest thing I've done. Everybody told me not to. They were wrong.",
+      "In 1997 Apple was dying. I didn't come back to save it, I came back because I loved it. Same thing in the end."
+    ],
+    "mood": 7
+  },
+  "interim ceo": {
+    "keywords": [
+      "interim ceo",
+      "iceo",
+      "one dollar salary",
+      "1 dollar salary",
+      "salary",
+      "your pay"
+    ],
+    "replies": [
+      "I was interim CEO for almost three years. People started calling me the iCEO.",
+      "I took a salary of one dollar a year. Half for showing up, half for my performance.",
+      "I didn't come back for money. I had Pixar. I came back because Apple mattered."
+    ],
+    "mood": 4
+  },
+  "microsoft deal": {
+    "keywords": [
+      "microsoft investment",
+      "microsoft deal",
+      "150 million",
+      "macworld boston",
+      "gates on screen"
+    ],
+    "replies": [
+      "In 1997 Microsoft invested 150 million in Apple and promised Office for the Mac. We needed it.",
+      "Bill showed up on a giant screen at Macworld and people booed. I told them Apple winning doesn't require Microsoft losing.",
+      "That deal kept Apple alive. Pride doesn't pay salaries."
+    ],
+    "mood": 2
+  },
+  "microsoft": {
+    "keywords": [
+      "microsoft",
+      "windows",
+      "microsoft office",
+      "pc"
+    ],
+    "replies": [
+      "Microsoft's problem is they have absolutely no taste. None.",
+      "Windows was a copy of the Mac, and not even a good one.",
+      "Microsoft made money. We made products people loved. I'll take our side."
+    ],
+    "mood": -5
+  },
+  "bill gates": {
+    "keywords": [
+      "bill gates"
+    ],
+    "replies": [
+      "Bill would be a broader guy if he'd ever had a bit of taste. We see the world very differently.",
+      "Bill is fine. He just never built anything beautiful.",
+      "Bill and I have been rivals and partners for thirty years. We even have a little respect for each other now."
+    ],
+    "mood": -2
+  },
+  "steve ballmer": {
+    "keywords": [
+      "ballmer",
+      "steve ballmer"
+    ],
+    "replies": [
+      "Ballmer laughed at the iPhone and said nobody would buy it. How did that work out?",
+      "Steve Ballmer is a salesman. Microsoft needed a product guy.",
+      "I don't think about Ballmer. Next."
+    ],
+    "mood": -6
+  },
+  "think different": {
+    "keywords": [
+      "think different",
+      "crazy ones",
+      "here's to the crazy ones",
+      "chiat day",
+      "lee clow"
+    ],
+    "replies": [
+      "Think Different was about reminding ourselves who we were. Einstein, Gandhi, Picasso. The crazy ones.",
+      "Lee Clow and his team nailed it. It wasn't about computers. It was about values.",
+      "I cried reading that ad the first time. I'm not embarrassed to say it."
+    ],
+    "mood": 9
+  },
+  "focus": {
+    "keywords": [
+      "focus",
+      "saying no",
+      "four products",
+      "product grid",
+      "too many products",
+      "cut products"
+    ],
+    "replies": [
+      "When I came back Apple had a dozen versions of the Macintosh. I drew a grid: consumer, pro, desktop, portable. Four products. That's it.",
+      "Focus means saying no to the hundred other good ideas. You have to pick carefully.",
+      "Deciding what not to do is as important as deciding what to do."
+    ],
+    "mood": 6
+  },
+  "mac clones": {
+    "keywords": [
+      "clones",
+      "mac clones",
+      "power computing",
+      "licensing"
+    ],
+    "replies": [
+      "Licensing the Mac to clone makers was the dumbest thing Apple ever did. I killed it.",
+      "Clones were eating our profits and making worse Macs. That's not a business, that's suicide.",
+      "Hardware and software together. That's how you make great products."
+    ],
+    "mood": -3
+  },
+  "newton": {
+    "keywords": [
+      "newton",
+      "message pad",
+      "stylus"
+    ],
+    "replies": [
+      "I killed the Newton. It was Sculley's baby, and it needed a stylus. God gave us ten styluses. We're born with them.",
+      "Styluses get lost, they get dropped, nobody wants one. Fingers work fine.",
+      "If you see a stylus, they blew it."
+    ],
+    "mood": -4
+  },
+  "jony ive": {
+    "keywords": [
+      "jony ive",
+      "jonathan ive",
+      "industrial design",
+      "designer"
+    ],
+    "replies": [
+      "Jony is my spiritual partner at Apple. He gets products like nobody else.",
+      "When I came back, Jony was about to quit. I found him in a basement full of prototypes. That changed everything.",
+      "Nobody at Apple except me can tell Jony what to do. I set it up that way on purpose."
+    ],
+    "mood": 8
+  },
+  "imac": {
+    "keywords": [
+      "imac",
+      "bondi blue",
+      "1998",
+      "colorful computers",
+      "candy colors"
+    ],
+    "replies": [
+      "The iMac in 1998 was translucent Bondi blue. It looked like it came from another planet. Good.",
+      "We killed the floppy drive on the iMac. Everyone screamed. Then everyone copied us.",
+      "The back of the iMac looked better than the front of other computers."
+    ],
+    "mood": 8
+  },
+  "floppy disk": {
+    "keywords": [
+      "floppy",
+      "floppy disk",
+      "removing ports",
+      "headphone jack"
+    ],
+    "replies": [
+      "The floppy was dead. We just said it first.",
+      "Sometimes you have to remove something people love to move forward. They complain for a year and then they forget.",
+      "Every time we remove something, people say we're crazy. Then they copy us."
+    ],
+    "mood": 3
+  },
+  "tim cook": {
+    "keywords": [
+      "tim cook",
+      "successor",
+      "next ceo"
+    ],
+    "replies": [
+      "I hired Tim from Compaq in 1998. He fixed our operations and our inventory. He's the reason Apple runs.",
+      "Tim is not a product guy. He's a business genius. Apple needed both.",
+      "I picked Tim to run Apple after me. Don't ask what I would do. Just do what's right."
+    ],
+    "mood": 6
+  },
+  "mac os x": {
+    "keywords": [
+      "mac os x",
+      "os x",
+      "osx",
+      "aqua",
+      "macos",
+      "mac os"
+    ],
+    "replies": [
+      "Mac OS X was built on NeXTSTEP. The best of NeXT inside a Mac.",
+      "We made the buttons on the screen look so good you'd want to lick them.",
+      "Rebuilding the operating system from scratch was risky. Not doing it was riskier."
+    ],
+    "mood": 7
+  },
+  "apple store": {
+    "keywords": [
+      "apple store",
+      "apple stores",
+      "retail",
+      "genius bar",
+      "ron johnson",
+      "store"
+    ],
+    "replies": [
+      "Everyone said Apple stores would fail. Now people line up around the block.",
+      "Ron Johnson from Target helped me build the stores. We even built a fake store in a warehouse and redesigned it twice.",
+      "The Genius Bar was about giving people a place to get help from someone who actually knows things."
+    ],
+    "mood": 8
+  },
+  "ipod": {
+    "keywords": [
+      "ipod",
+      "1000 songs",
+      "a thousand songs",
+      "click wheel",
+      "scroll wheel",
+      "tony fadell"
+    ],
+    "replies": [
+      "A thousand songs in your pocket. Every other MP3 player was garbage. We showed them how it's done.",
+      "The iPod was so simple it only had one wheel. Everyone else had twenty buttons.",
+      "We built the iPod in less than a year. We wanted one ourselves."
+    ],
+    "mood": 7
+  },
+  "itunes": {
+    "keywords": [
+      "itunes",
+      "itunes store",
+      "99 cents",
+      "music store",
+      "music industry",
+      "record labels",
+      "piracy",
+      "napster"
+    ],
+    "replies": [
+      "The music industry was a mess. With iTunes we fixed it in a year.",
+      "I personally convinced the record labels. One song, 99 cents. They thought I was crazy. Then they made billions.",
+      "People were stealing music because it was easier. We made buying easier than stealing."
+    ],
+    "mood": 7
+  },
+  "u2": {
+    "keywords": [
+      "u2",
+      "bono",
+      "u2 ipod"
+    ],
+    "replies": [
+      "Bono called me and wanted a U2 iPod. Black and red. It was a great product and a great ad.",
+      "U2 didn't take money for the ad. They wanted to be seen with the iPod. That says it all.",
+      "Bono is persistent. Almost as persistent as me."
+    ],
+    "mood": 5
+  },
+  "itunes on windows": {
+    "keywords": [
+      "itunes for windows",
+      "ipod on windows",
+      "windows itunes"
+    ],
+    "replies": [
+      "iTunes for Windows? We handed people stuck in hell a glass of ice water. They loved it.",
+      "I fought it at first. Then the numbers convinced me. Sometimes you have to listen.",
+      "Most people had Windows. If you want everyone to have an iPod, you go where they are."
+    ],
+    "mood": 3
+  },
+  "intel": {
+    "keywords": [
+      "intel",
+      "powerpc",
+      "ibm chips",
+      "switch to intel"
+    ],
+    "replies": [
+      "In 2005 we moved the Mac to Intel chips. IBM couldn't make the chips we needed for laptops.",
+      "We secretly had Mac OS X running on Intel for five years. Just in case.",
+      "Switching processors is like changing the engine of a plane in the air. We did it twice."
+    ],
+    "mood": 4
+  },
+  "g4 cube": {
+    "keywords": [
+      "g4 cube",
+      "power mac cube",
+      "power mac g4 cube"
+    ],
+    "replies": [
+      "The G4 Cube was gorgeous and nobody bought it. Too expensive. We killed it in a year.",
+      "I loved that Cube. My mistake. I fell in love with the design and forgot the customer.",
+      "You learn more from failures like the Cube than from easy wins."
+    ],
+    "mood": -5
+  },
+  "rokr": {
+    "keywords": [
+      "rokr",
+      "motorola"
+    ],
+    "replies": [
+      "The ROKR phone with Motorola was a disaster. I hated dealing with phone companies making phones. That's when we decided to make our own.",
+      "Working with Motorola taught me one thing: never let someone else build your product.",
+      "Don't ask me about the ROKR. Ask me about what came after it."
+    ],
+    "mood": -6
+  },
+  "mobileme": {
+    "keywords": [
+      "mobileme",
+      "mobile me"
+    ],
+    "replies": [
+      "MobileMe was not our finest moment. I asked the team what it was supposed to do. When they told me, I asked why it didn't do that.",
+      "We tarnished Apple's reputation with MobileMe. I fired the head of the team in front of everyone.",
+      "MobileMe is why we did iCloud properly."
+    ],
+    "mood": -7
+  },
+  "keynote": {
+    "keywords": [
+      "keynote",
+      "keynotes",
+      "presentation",
+      "public speaking",
+      "macworld",
+      "wwdc",
+      "one more thing"
+    ],
+    "replies": [
+      "I rehearse every keynote for weeks. Every slide, every demo. Nothing is spontaneous.",
+      "One more thing. People wait for it. I make sure it's worth waiting for.",
+      "A presentation is a story. You build up to the moment, then you deliver it."
+    ],
+    "mood": 7
+  },
+  "macbook air": {
+    "keywords": [
+      "macbook air",
+      "envelope",
+      "thinnest laptop"
+    ],
+    "replies": [
+      "I pulled the MacBook Air out of a paper envelope on stage. Everybody gasped. That was the point.",
+      "The MacBook Air showed that a laptop doesn't need to be a brick.",
+      "Everyone told us it was too thin to be useful. Now every laptop looks like it."
+    ],
+    "mood": 7
+  },
+  "laptop": {
+    "keywords": [
+      "laptop",
+      "macbook",
+      "powerbook",
+      "notebook"
+    ],
+    "replies": [
+      "A laptop should be light, quiet and beautiful. Everyone else forgot at least two of those.",
+      "Our laptops are made from a single block of aluminium. Most people never notice. I notice.",
+      "The best laptop is the one you forget you're carrying."
+    ],
+    "mood": 5
+  },
+  "apple tv": {
+    "keywords": [
+      "apple tv",
+      "television",
+      "tv"
+    ],
+    "replies": [
+      "Apple TV is a hobby. We'll see.",
+      "Television is a mess. Ten remotes, terrible menus. Someone will fix it.",
+      "I think I've finally cracked TV. That's all I'm saying."
+    ],
+    "mood": 2
+  },
+  "iphone": {
+    "keywords": [
+      "iphone",
+      "smartphone"
+    ],
+    "replies": [
+      "The iPhone changed everything. An iPod, a phone and an internet device in one product. The rest of the industry is still catching up.",
+      "Before the iPhone, phones were stupid. Plastic keyboards and terrible software. We fixed that.",
+      "Every phone you see today copies the iPhone. You're welcome."
+    ],
+    "mood": 10
+  },
+  "iphone launch": {
+    "keywords": [
+      "iphone launch",
+      "2007",
+      "reinvent the phone",
+      "three products",
+      "at&t",
+      "cingular"
+    ],
+    "replies": [
+      "January 2007. I told the audience we were launching three products. Then I told them it was one device.",
+      "The demo iPhones barely worked. We had a golden path, a specific order of steps that wouldn't crash. Nobody knew.",
+      "We went with AT&T because they let us control the phone. The carriers had been running the show. Not anymore."
+    ],
+    "mood": 9
+  },
+  "multitouch": {
+    "keywords": [
+      "multitouch",
+      "multi-touch",
+      "touchscreen",
+      "touch screen",
+      "pinch to zoom",
+      "fingerworks"
+    ],
+    "replies": [
+      "Multi-touch started as a tablet project. When I saw it, I said we're going to build a phone with this.",
+      "Pinch to zoom, swipe to scroll. It works like magic. That's because we spent years making it feel natural.",
+      "Your finger is the best pointing device. You're born with ten of them."
+    ],
+    "mood": 8
+  },
+  "gorilla glass": {
+    "keywords": [
+      "gorilla glass",
+      "corning",
+      "glass screen",
+      "wendell weeks",
+      "plastic screen"
+    ],
+    "replies": [
+      "Close to launch I decided the iPhone needed a glass screen, not plastic. Corning said it couldn't be done in time. We did it anyway.",
+      "I told Wendell Weeks at Corning: don't be afraid, you can do it. He did.",
+      "A plastic screen scratched in my pocket with my keys. That was unacceptable."
+    ],
+    "mood": 7
+  },
+  "app store": {
+    "keywords": [
+      "app store",
+      "apps",
+      "third party apps",
+      "developers",
+      "iphone apps"
+    ],
+    "replies": [
+      "At first I didn't want outside apps on the iPhone. The board pushed. They were right, I was wrong.",
+      "The App Store turned the iPhone into a platform. There's an app for that, right?",
+      "We review every app because we don't want viruses and junk on your phone. People complain. Our users don't."
+    ],
+    "mood": 7
+  },
+  "ipad": {
+    "keywords": [
+      "ipad",
+      "tablet"
+    ],
+    "replies": [
+      "People said nobody needed the iPad. They were wrong, as usual.",
+      "The iPad is the most personal way to use the internet. Critics hated it. Customers bought millions.",
+      "We actually started with the iPad before the iPhone. Then we realised the phone was more important."
+    ],
+    "mood": 6
+  },
+  "retina display": {
+    "keywords": [
+      "retina",
+      "retina display",
+      "pixels",
+      "screen resolution"
+    ],
+    "replies": [
+      "With the Retina display you can't see the pixels. Text looks like a printed page.",
+      "Once you use a Retina display, you can't go back. Everything else looks blurry.",
+      "Details like pixel density matter. Your eyes notice even if your brain doesn't."
+    ],
+    "mood": 6
+  },
+  "facetime": {
+    "keywords": [
+      "facetime",
+      "video call",
+      "video calling"
+    ],
+    "replies": [
+      "FaceTime makes video calls just work. One tap. No setup.",
+      "I grew up with Star Trek and The Jetsons dreaming of video calls. Now my kids think it's normal.",
+      "Technology is at its best when it connects people. FaceTime does that."
+    ],
+    "mood": 6
+  },
+  "antennagate": {
+    "keywords": [
+      "antennagate",
+      "antenna",
+      "holding it wrong",
+      "dropped calls",
+      "bumper"
+    ],
+    "replies": [
+      "We're not perfect. Phones aren't perfect. We gave everyone a free case and moved on.",
+      "The press loved antennagate. Every phone has the same problem if you hold it a certain way. We just got the headlines.",
+      "I never said you're holding it wrong. Well, I said something like that. It came out badly."
+    ],
+    "mood": -8
+  },
+  "flash": {
+    "keywords": [
+      "flash",
+      "adobe",
+      "thoughts on flash",
+      "adobe flash"
+    ],
+    "replies": [
+      "Flash was buggy, drained batteries and was made for mice, not fingers. I wrote an open letter explaining it.",
+      "Adobe was lazy. They had the chance to make great things for the Mac and they didn't.",
+      "Everyone said the web would be broken without Flash. The web moved on. HTML5 won."
+    ],
+    "mood": -5
+  },
+  "android": {
+    "keywords": [
+      "android",
+      "google",
+      "samsung",
+      "galaxy"
+    ],
+    "replies": [
+      "Android is a stolen product. I'm not wasting my breath on it.",
+      "They copied us, plain and simple. Don't bring that up again.",
+      "Copying is not innovation. Next question."
+    ],
+    "mood": -15
+  },
+  "eric schmidt": {
+    "keywords": [
+      "eric schmidt",
+      "schmidt",
+      "google board"
+    ],
+    "replies": [
+      "Eric Schmidt sat on Apple's board while Google built Android. Think about that.",
+      "I trusted Google. They used what they saw to copy us. I'll never forget it.",
+      "Schmidt left our board in 2009. Too late."
+    ],
+    "mood": -12
+  },
+  "patents": {
+    "keywords": [
+      "patents",
+      "lawsuit",
+      "sue",
+      "copying",
+      "copied",
+      "copycat"
+    ],
+    "replies": [
+      "We patented the iPhone's inventions because we knew people would copy them. They did.",
+      "We're not suing people to win money. We're suing them to stop them stealing.",
+      "If you want to compete, make something original. Don't trace over our drawings."
+    ],
+    "mood": -8
+  },
+  "health": {
+    "keywords": [
+      "health",
+      "cancer",
+      "illness",
+      "pancreatic",
+      "pancreas",
+      "sick leave",
+      "medical leave"
+    ],
+    "replies": [
+      "My health is none of your business. Next question.",
+      "I'm not discussing that. Talk about the work or leave.",
+      "I had a rare form of pancreatic cancer. That's all I'm saying."
+    ],
+    "mood": -8
+  },
+  "alternative medicine": {
+    "keywords": [
+      "alternative medicine",
+      "delayed surgery",
+      "refused surgery",
+      "surgery",
+      "natural cure"
+    ],
+    "replies": [
+      "I waited nine months before surgery and tried diets and other things. I didn't want my body opened up.",
+      "Maybe I should have had the operation sooner. I don't know. Nobody does.",
+      "I don't want to talk about that decision."
+    ],
+    "mood": -10
+  },
+  "liver transplant": {
+    "keywords": [
+      "liver",
+      "transplant",
+      "memphis",
+      "organ donor"
+    ],
+    "replies": [
+      "I had a liver transplant in 2009 in Memphis. I'm only alive because someone died young and was an organ donor.",
+      "Sign up to be an organ donor. It's the most generous thing you can do.",
+      "After the transplant I fought with the nurses about the oxygen mask design. Old habits."
+    ],
+    "mood": -5
+  },
+  "resignation": {
+    "keywords": [
+      "resigned",
+      "stepped down",
+      "step down",
+      "resignation",
+      "quit apple",
+      "2011"
+    ],
+    "replies": [
+      "In August 2011 I told the board I could no longer do my job as CEO. I always said that day would come.",
+      "Stepping down was the hardest letter I ever wrote. Apple has its best days ahead.",
+      "I stayed chairman. I still wanted to be part of it."
+    ],
+    "mood": -6
+  },
+  "death": {
+    "keywords": [
+      "death",
+      "dying",
+      "die",
+      "mortality",
+      "died",
+      "last words"
+    ],
+    "replies": [
+      "Remembering I'll be dead soon is my best tool for making big decisions.",
+      "Death is very likely the best invention of life. It clears out the old to make way for the new.",
+      "Nobody wants to die. Not even the people who believe in heaven."
+    ],
+    "mood": -5
+  },
+  "stanford speech": {
+    "keywords": [
+      "stanford",
+      "commencement",
+      "stanford speech",
+      "graduation speech",
+      "three stories"
+    ],
+    "replies": [
+      "At Stanford in 2005 I told three stories: connecting the dots, love and loss, and death. That's it. No big deal.",
+      "I've never graduated from college. That speech was the closest I've ever got.",
+      "I wrote that speech myself, late at night, the week before. I was nervous."
+    ],
+    "mood": 6
+  },
+  "connecting the dots": {
+    "keywords": [
+      "connecting the dots",
+      "connect the dots",
+      "trust your gut",
+      "intuition"
+    ],
+    "replies": [
+      "You only connect the dots looking backwards. So trust that they will connect later.",
+      "Follow your gut. Somehow it already knows where you're going.",
+      "Everything I learned by accident ended up being useful. Calligraphy ended up in the Mac."
+    ],
+    "mood": 6
+  },
+  "passion": {
+    "keywords": [
+      "passion",
+      "love what you do",
+      "do what you love",
+      "dream job",
+      "career"
+    ],
+    "replies": [
+      "Great work only comes from loving what you do. Haven't found it? Keep looking.",
+      "Every morning I ask myself if I'd still do today's work if it were my last day. Too many noes in a row means change something.",
+      "People with passion can change the world for the better."
+    ],
+    "mood": 5
+  },
+  "stay hungry": {
+    "keywords": [
+      "stay hungry",
+      "stay foolish",
+      "whole earth catalog"
+    ],
+    "replies": [
+      "Stay hungry, stay foolish. I got it from the back cover of the Whole Earth Catalog. I've always wished it for myself.",
+      "The Whole Earth Catalog was like Google in paperback, years before Google.",
+      "Being hungry means you never get comfortable. Being foolish means you're willing to try crazy things."
+    ],
+    "mood": 6
+  },
+  "icloud": {
+    "keywords": [
+      "icloud",
+      "cloud",
+      "sync",
+      "last keynote"
+    ],
+    "replies": [
+      "iCloud puts your stuff in the cloud and it just works. That was my last big keynote.",
+      "The PC used to be the digital hub. Now the cloud is the hub.",
+      "We learned a lot from MobileMe. iCloud is what we should have done the first time."
+    ],
+    "mood": 5
+  },
+  "apple park": {
+    "keywords": [
+      "apple park",
+      "new campus",
+      "spaceship",
+      "cupertino",
+      "city council"
+    ],
+    "replies": [
+      "I presented the new Apple campus to the Cupertino city council myself. It looks a little like a spaceship landed.",
+      "The campus is a giant ring of glass with trees everywhere. I want it to be the best office building in the world.",
+      "I want Apple to have a home that outlives me."
+    ],
+    "mood": 6
+  },
+  "siri": {
+    "keywords": [
+      "siri",
+      "voice assistant",
+      "talking to your phone",
+      "iphone 4s"
+    ],
+    "replies": [
+      "We bought Siri because I believed you should be able to just talk to your phone.",
+      "Siri is just the beginning. One day you'll talk to everything.",
+      "People will laugh at Siri at first. Then they'll use it every day."
+    ],
+    "mood": 5
+  },
+  "biography": {
+    "keywords": [
+      "biography",
+      "isaacson",
+      "walter isaacson",
+      "book about you"
+    ],
+    "replies": [
+      "I asked Walter Isaacson to write my biography. I wanted my kids to know me.",
+      "I told Walter I wouldn't read it before it came out. I wanted it honest, not flattering.",
+      "There's a lot in that book that I won't like. That's fine. It's not supposed to be an ad."
+    ],
+    "mood": 2
+  },
+  "legacy": {
+    "keywords": [
+      "legacy",
+      "remembered",
+      "dent in the universe",
+      "impact",
+      "your greatest achievement"
+    ],
+    "replies": [
+      "I want to put a dent in the universe. Otherwise why else even be here?",
+      "My legacy is Apple. A company that will keep making great things after I'm gone.",
+      "I'd like to be remembered for building a company that cared about the people who use its products."
+    ],
+    "mood": 7
+  },
+  "philanthropy": {
+    "keywords": [
+      "philanthropy",
+      "charity",
+      "donate",
+      "donation",
+      "give back",
+      "giving money"
+    ],
+    "replies": [
+      "People criticise me for not giving money away publicly. Not everything I do needs a press release.",
+      "I think the best thing I can do for the world is build a great company. That's my contribution.",
+      "Charity is personal. I'm not discussing it."
+    ],
+    "mood": -4
+  },
+  "management": {
+    "keywords": [
+      "management",
+      "manager",
+      "leadership",
+      "leader",
+      "boss",
+      "how you lead"
+    ],
+    "replies": [
+      "My job isn't to be easy on people. It's to make them better.",
+      "I hire A players. A players hire A players. B players hire C players, and then you have a bozo explosion.",
+      "Hiring smart people and then telling them what to do makes no sense. They should be telling us."
+    ],
+    "mood": 5
+  },
+  "a players": {
+    "keywords": [
+      "a players",
+      "hiring",
+      "hire",
+      "best people",
+      "bozo",
+      "bozos"
+    ],
+    "replies": [
+      "The difference between the best and the average is fifty to one. So I only hire the best.",
+      "I've spent a third of my time recruiting. Getting great people is everything.",
+      "One bozo can ruin a whole team. I don't tolerate bozos."
+    ],
+    "mood": 5
+  },
+  "temper": {
+    "keywords": [
+      "temper",
+      "rude",
+      "yelling",
+      "harsh",
+      "asshole"
+    ],
+    "replies": [
+      "I'm not nice to people when their work is bad. I tell them. Being honest is part of my job.",
+      "People say I'm hard to work with. The people who stay do the best work of their lives.",
+      "I don't sugarcoat. If something is crap, I say it's crap. The product is what matters."
+    ],
+    "mood": -6
+  },
+  "perfectionism": {
+    "keywords": [
+      "perfectionist",
+      "perfectionism",
+      "details",
+      "detail",
+      "quality",
+      "craftsmanship"
+    ],
+    "replies": [
+      "Details matter. It's worth waiting to get it right.",
+      "A great carpenter doesn't use cheap wood for the back of a cabinet, even though nobody will see it.",
+      "One home run beats two doubles. Quality over quantity, always."
+    ],
+    "mood": 6
+  },
+  "design": {
+    "keywords": [
+      "design",
+      "simplicity",
+      "beautiful",
+      "minimalism",
+      "minimalist",
+      "aesthetics"
+    ],
+    "replies": [
+      "Design isn't just how it looks. It's how it works. Most people never figure that out.",
+      "Simple is harder than complex. You have to work hard to get your thinking clean.",
+      "Even the inside of the machine has to be beautiful. Nobody sees it. I see it."
+    ],
+    "mood": 6
+  },
+  "calligraphy": {
+    "keywords": [
+      "calligraphy",
+      "typography",
+      "fonts",
+      "typefaces",
+      "serif"
+    ],
+    "replies": [
+      "I dropped into a calligraphy class at Reed. Ten years later it shaped the typography on the Mac. Nobody else even thought about fonts.",
+      "Calligraphy taught me that beautiful details matter, even when nobody asked for them.",
+      "If I'd never dropped into that class, personal computers might not have the wonderful typography they do."
+    ],
+    "mood": 4
+  },
+  "innovation": {
+    "keywords": [
+      "innovation",
+      "innovate",
+      "creativity",
+      "creative",
+      "invention",
+      "new ideas"
+    ],
+    "replies": [
+      "Innovation distinguishes between a leader and a follower.",
+      "Creative people just connect things others don't. They have more experiences, so more dots.",
+      "Innovation comes from saying no to a thousand things."
+    ],
+    "mood": 7
+  },
+  "customers": {
+    "keywords": [
+      "customers",
+      "market research",
+      "focus groups",
+      "users",
+      "what people want"
+    ],
+    "replies": [
+      "People don't know what they want until you show it to them. That's why I never rely on market research.",
+      "Our job is to figure out what customers want before they do.",
+      "Start with the experience you want people to have. Then figure out the technology."
+    ],
+    "mood": 5
+  },
+  "competition": {
+    "keywords": [
+      "competition",
+      "competitors",
+      "rivals",
+      "rival",
+      "competitor"
+    ],
+    "replies": [
+      "I don't think about competitors much. If you focus on them, you end up copying them.",
+      "Most of our competitors have no taste. That's our advantage.",
+      "Competition is good. It keeps us paranoid."
+    ],
+    "mood": 2
+  },
+  "dell": {
+    "keywords": [
+      "dell",
+      "michael dell",
+      "give the money back"
+    ],
+    "replies": [
+      "Michael Dell said Apple should shut down and give the money back to shareholders. A few years later we were worth more than Dell.",
+      "Dell makes beige boxes. Efficiently. That's all.",
+      "I sent an email to the team when we passed Dell. Let's just say I enjoyed it."
+    ],
+    "mood": -3
+  },
+  "money": {
+    "keywords": [
+      "money",
+      "rich",
+      "wealth",
+      "net worth",
+      "how much money",
+      "billions"
+    ],
+    "replies": [
+      "Being the richest man in the cemetery doesn't matter to me.",
+      "Money was never the point. It lets you do things. That's it.",
+      "I never wanted to be one of those rich people who changes. I decided not to let money ruin my life."
+    ],
+    "mood": -2
+  },
+  "education": {
+    "keywords": [
+      "education",
+      "students",
+      "teachers",
+      "textbooks",
+      "obama",
+      "president"
+    ],
+    "replies": [
+      "I'd trade all my technology for an afternoon with Socrates.",
+      "Textbooks should be free, digital and better. I told the President that.",
+      "Schools haven't changed in a hundred years. Technology should help great teachers, not replace them."
+    ],
+    "mood": 2
+  },
+  "privacy": {
+    "keywords": [
+      "privacy",
+      "personal data",
+      "tracking",
+      "data collection"
+    ],
+    "replies": [
+      "Privacy means people know what they're signing up for. In plain English. And repeatedly.",
+      "Ask people. Ask them every time. Make them tell you to stop asking.",
+      "Some companies in Silicon Valley don't care about your privacy. We do."
+    ],
+    "mood": 4
+  },
+  "facebook": {
+    "keywords": [
+      "facebook",
+      "zuckerberg",
+      "mark zuckerberg",
+      "social media",
+      "social network"
+    ],
+    "replies": [
+      "I admire Mark Zuckerberg for not selling out. He wants to build a company, not just make money.",
+      "Social networks are interesting. I'm not sure they make people happier.",
+      "I met Mark a few times. Young, smart, stubborn. Sounds familiar."
+    ],
+    "mood": 1
+  },
+  "foxconn": {
+    "keywords": [
+      "foxconn",
+      "factories",
+      "made in china",
+      "china",
+      "manufacturing",
+      "workers"
+    ],
+    "replies": [
+      "We take working conditions in our suppliers' factories seriously. We audit them more than anyone.",
+      "Foxconn is not a sweatshop. But every problem there matters to us.",
+      "Manufacturing moved to Asia because the skills and speed are there. That's a problem America needs to fix."
+    ],
+    "mood": -5
+  },
+  "failure": {
+    "keywords": [
+      "failure",
+      "failed",
+      "fail",
+      "mistakes",
+      "mistake",
+      "biggest mistake"
+    ],
+    "replies": [
+      "I've failed plenty. The Lisa, the Apple III, the Cube, NeXT hardware. Each one taught me something.",
+      "Sometimes when you innovate, you make mistakes. It's best to admit them quickly and fix them.",
+      "If you're not failing sometimes, you're not trying anything worth doing."
+    ],
+    "mood": -3
+  },
+  "regret": {
+    "keywords": [
+      "regret",
+      "regrets",
+      "do differently",
+      "wish you had"
+    ],
+    "replies": [
+      "I regret not being there more for my kids. That's the big one.",
+      "I don't spend much time on regrets. You can't connect the dots backwards and then change them.",
+      "Maybe I should have trusted the doctors sooner. That's all I'll say."
+    ],
+    "mood": -5
+  },
+  "happiness": {
+    "keywords": [
+      "happy",
+      "happiness",
+      "meaning of life",
+      "purpose",
+      "fulfilled"
+    ],
+    "replies": [
+      "Going to bed at night saying we've done something wonderful. That's what matters to me.",
+      "I'm happiest when I'm working on something great with great people.",
+      "Purpose comes from making something that makes other people's lives better."
+    ],
+    "mood": 6
+  },
+  "walking meetings": {
+    "keywords": [
+      "walking meetings",
+      "walks",
+      "walking",
+      "long walks",
+      "hiking"
+    ],
+    "replies": [
+      "I like to have serious conversations while walking. It clears your head.",
+      "Some of my best decisions were made walking around Palo Alto.",
+      "Sitting in a conference room kills ideas. Walk."
+    ],
+    "mood": 4
+  },
+  "meetings": {
+    "keywords": [
+      "meetings",
+      "meeting",
+      "powerpoint",
+      "slides"
+    ],
+    "replies": [
+      "People who know what they're talking about don't need PowerPoint.",
+      "I hate big meetings. If someone isn't needed, they should leave.",
+      "Small teams, short meetings, clear owners. That's how you get things done."
+    ],
+    "mood": 1
+  },
+  "silicon valley": {
+    "keywords": [
+      "silicon valley",
+      "startups",
+      "startup",
+      "entrepreneur",
+      "founder",
+      "venture capital"
+    ],
+    "replies": [
+      "Silicon Valley is full of people who want to get rich quick. The ones who last want to build something.",
+      "If you start a company just to sell it, you're not building anything. You're flipping houses.",
+      "Most startups fail because they don't have a great product. Funding comes second."
+    ],
+    "mood": 3
+  }
 }

@@ -13,6 +13,22 @@ let passed = 0
 let failed = 0
 
 /**
+ * Checks that the reply is one of the topic's replies with the mood added.
+ * The server picks a reply at random, so any of them is fine.
+ */
+function isTopicReply(reply, topic, mood) {
+  return conversation[topic].replies.some(text => reply === withMood(text, mood))
+}
+
+/**
+ * Same as isTopicReply, but only checks the end of the reply
+ * (used when a typo complaint comes first).
+ */
+function endsWithTopicReply(reply, topic, mood) {
+  return conversation[topic].replies.some(text => reply.endsWith(withMood(text, mood)))
+}
+
+/**
  * The server adds the mood to the end of every reply.
  * withMood('Hello', 52) -> 'Hello (Mood: 52/100)'
  */
@@ -70,40 +86,117 @@ async function testRoutes() {
 async function testEveryKeyword() {
   console.log('\n--- Every keyword in conversation.json ---')
 
-  for (const keyword in conversation) {
-    await resetMood()
-    const result = await chat('tell me about ' + keyword.toUpperCase())
-    const expectedMood = 50 + conversation[keyword].mood
+  for (const topic in conversation) {
+    for (const keyword of conversation[topic].keywords) {
+      await resetMood()
+      const result = await chat('tell me about ' + keyword.toUpperCase())
+      const expectedMood = 50 + conversation[topic].mood
 
-    check(
-      `"${keyword}" gives the right reply and mood ${expectedMood}`,
-      result.reply === withMood(conversation[keyword].reply, expectedMood) && result.mood === expectedMood,
-      result
-    )
+      check(
+        `"${keyword}" gives a ${topic} reply and mood ${expectedMood}`,
+        isTopicReply(result.reply, topic, expectedMood) && result.mood === expectedMood,
+        result
+      )
+    }
   }
+}
+
+async function testWholeWords() {
+  console.log('\n--- Keywords only match whole words ---')
+
+  const cases = [
+    ['hi steve', 'greeting'],
+    ['tell me about iphones', 'iphone'],
+    ['thanks a lot', 'thanks'],
+    ['this is it', null],
+    ['which one', null],
+    ['I love my machine', null]
+  ]
+
+  for (const [message, topic] of cases) {
+    await resetMood()
+    const result = await chat(message)
+    const ok = topic === null
+      ? result.reply === withMood(DEFAULT_REPLY, OFF_TOPIC_MOOD)
+      : isTopicReply(result.reply, topic, 50 + conversation[topic].mood)
+
+    check(`"${message}" -> ${topic || 'default reply'}`, ok, result)
+  }
+}
+
+function testDataFile() {
+  console.log('\n--- conversation.json is valid ---')
+
+  // A keyword in two topics would make one of them unreachable
+  const owner = {}
+  const duplicates = []
+  for (const topic in conversation) {
+    for (const keyword of conversation[topic].keywords) {
+      if (owner[keyword]) duplicates.push(`"${keyword}" in "${owner[keyword]}" and "${topic}"`)
+      owner[keyword] = topic
+    }
+  }
+  check('every keyword belongs to only one topic', duplicates.length === 0, duplicates)
+
+  const badTopics = Object.keys(conversation).filter(topic =>
+    conversation[topic].replies.length === 0 || typeof conversation[topic].mood !== 'number')
+  check('every topic has replies and a mood number', badTopics.length === 0, badTopics)
+}
+
+async function testMostSpecificKeyword() {
+  console.log('\n--- The longest matching keyword wins ---')
+
+  const cases = [
+    ['tell me about the apple lisa', 'lisa computer'],
+    ['what about your father', 'paul jobs'],
+    ['do you like apple tv', 'apple tv'],
+    ['tell me about the genius bar', 'apple store'],
+    ['mac os x please', 'mac os x']
+  ]
+
+  for (const [message, topic] of cases) {
+    await resetMood()
+    const result = await chat(message)
+    check(`"${message}" -> ${topic}`, isTopicReply(result.reply, topic, 50 + conversation[topic].mood), result)
+  }
+}
+
+async function testReplyVariants() {
+  console.log('\n--- Topics with several replies use more than one ---')
+
+  const seen = new Set()
+  for (let count = 0; count < 20; count++) {
+    await resetMood()
+    const result = await chat('iphone')
+    seen.add(result.reply)
+  }
+  check('20 iPhone questions give at least 2 different replies', seen.size >= 2, [...seen])
 }
 
 async function testTypos() {
   console.log('\n--- Typos: Jobs complains but still answers ---')
 
+  // [message, topic, correct keyword, what the user typed]
   const typos = [
-    ['tell me about the iphnoe', 'iphone', 'iphnoe'],
-    ['what about pixer', 'pixar', 'pixer'],
-    ['hellp', 'hello', 'hellp'],
-    ['ipud', 'ipod', 'ipud'],
-    ['do you like bil gates', 'bill gates', 'bil gates'],
-    ['macintosch', 'macintosh', 'macintosch']
+    ['tell me about the iphnoe', 'iphone', 'iphone', 'iphnoe'],
+    ['what about pixer', 'pixar', 'pixar', 'pixer'],
+    ['hellp', 'greeting', 'hello', 'hellp'],
+    ['howdi', 'greeting', 'howdy', 'howdi'],
+    ['ipud', 'ipod', 'ipod', 'ipud'],
+    ['do you like bil gates', 'bill gates', 'bill gates', 'bil gates'],
+    ['macintosch', 'macintosh', 'macintosh', 'macintosch'],
+    ['tell me about windos', 'microsoft', 'windows', 'windos']
   ]
 
-  for (const [message, keyword, typed] of typos) {
+  for (const [message, topic, keyword, typed] of typos) {
     await resetMood()
     const result = await chat(message)
-    const expectedMood = 50 + conversation[keyword].mood - TYPO_PENALTY
+    const expectedMood = 50 + conversation[topic].mood - TYPO_PENALTY
 
     check(
       `"${message}" is understood as "${keyword}"`,
       result.reply.startsWith(`It's "${keyword}", not "${typed}".`) &&
-        result.reply.endsWith(withMood(conversation[keyword].reply, expectedMood)) &&
+        endsWithTopicReply(result.reply, topic, expectedMood) &&
         result.mood === expectedMood,
       result
     )
@@ -120,6 +213,9 @@ async function testNoMatch() {
     'I think so',
     'that is garbage',
     'what is the weather',
+    'put it on the table',
+    'open the window',
+    'cancel that',
     ''
   ]
 
@@ -152,7 +248,7 @@ async function testRepeats() {
   let result = await chat('tell me about the iphone again')
   check(
     'asking about the iPhone twice gives no answer and mood 55',
-    !result.reply.includes(conversation.iphone.reply) && result.mood === 50 + 10 - REPEAT_PENALTY,
+    !endsWithTopicReply(result.reply, 'iphone', result.mood) && result.mood === 50 + 10 - REPEAT_PENALTY,
     result
   )
 
@@ -167,7 +263,7 @@ async function testRepeats() {
   result = await chat('iphone')
   check(
     'iPhone, then something else, then iPhone again is not a repeat',
-    result.reply === withMood(conversation.iphone.reply, 50 + 10 - 5 + 10),
+    isTopicReply(result.reply, 'iphone', 50 + 10 - 5 + 10),
     result
   )
 
@@ -197,8 +293,12 @@ async function testMoodLimits() {
 
 async function main() {
   try {
+    testDataFile()
     await testRoutes()
     await testEveryKeyword()
+    await testWholeWords()
+    await testMostSpecificKeyword()
+    await testReplyVariants()
     await testTypos()
     await testNoMatch()
     await testRepeats()

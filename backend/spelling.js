@@ -48,7 +48,9 @@ function levenshtein(firstWord, secondWord) {
 }
 
 // Real English words that look like a keyword with a typo,
-// e.g. "apply" is close to "apple", so they are never treated as mistakes
+// e.g. "apply" is close to "apple", so they are never treated as mistakes.
+// The big list in data/realWords.json is made by scripts/build-real-words.js,
+// the short list below is for common words that the dictionary misses.
 const realWords = new Set([
   'hell', 'cello',
   'apply', 'ample',
@@ -59,14 +61,33 @@ const realWords = new Set([
   'phone', 'phones',
   'adroit',
   'healthy', 'hearth', 'heath', 'wealth',
-  'than', 'think', 'tank', 'shank'
+  'than', 'think', 'tank', 'shank',
+  'rowdy', 'dowdy',
+  'signer', 'designed', 'resigned',
+  'implicit', 'topography',
+  'pulley', 'sullen',
+  'table', 'tabled', 'tables',
+  'window', 'widow', 'winnow',
+  'goggle',
+  'cancel', 'canter', 'dancer',
+  'wellness', 'stillness', 'fullness', 'wildness', 'idleness', 'mildness', 'silliness', 'oldness'
 ])
+
+try {
+  for (const word of require('./data/realWords.json')) {
+    realWords.add(word)
+  }
+} catch {
+  // No generated list yet, the short list above still works
+}
 
 /**
  * How many mistakes we forgive: none for very short words,
  * one for normal words and two for long words.
+ * Phrases like "bill gates" get one, so "my story" is not read as "toy story".
  */
 function allowedMistakes(keyword) {
+  if (keyword.includes(' ')) return 1
   if (keyword.length >= 7) return 2
   if (keyword.length >= 4) return 1
   return 0
@@ -76,7 +97,7 @@ function allowedMistakes(keyword) {
  * Looks for a keyword that the user typed with a small mistake.
  * Returns { keyword, typedText, distance } or null if nothing is close enough.
  * Example: findClosestKeyword('tell me about the iphnoe', ['iphone']) ->
- *          { keyword: 'iphone', typedText: 'iphnoe', distance: 2 }
+ *          { keyword: 'iphone', typedText: 'iphnoe', distance: 1 }
  */
 function findClosestKeyword(message, keywords) {
   const words = message.split(/[^a-z0-9]+/).filter(word => word !== '')
@@ -104,4 +125,4 @@ function findClosestKeyword(message, keywords) {
   return closest
 }
 
-module.exports = { levenshtein, findClosestKeyword }
+module.exports = { levenshtein, allowedMistakes, findClosestKeyword }
