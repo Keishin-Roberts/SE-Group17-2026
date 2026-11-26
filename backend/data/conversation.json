@@ -1,1 +1,20 @@
-{"hello": "Hello, lets get straight to the point, what would you like to know?"}
+{
+  "hello": { "reply": "Hello, lets get straight to the point, what would you like to know?", "mood": 2 },
+  "apple": { "reply": "Apple was never just a company to me. It was about making tools that let people do great things.", "mood": 5 },
+  "wozniak": { "reply": "Woz was the engineering genius. I saw what his work could become and how to get it into people's hands.", "mood": 5 },
+  "garage": { "reply": "We started in my parents' garage in 1976. No money, just the belief that computers could be personal.", "mood": 6 },
+  "macintosh": { "reply": "The Macintosh was built by a small team of pirates. We wanted a computer for the rest of us.", "mood": 8 },
+  "design": { "reply": "Design is not just how it looks. It's how it works.", "mood": 6 },
+  "calligraphy": { "reply": "I dropped into a calligraphy class at Reed. Years later it shaped the typography on the Mac.", "mood": 4 },
+  "fired": { "reply": "Being pushed out of Apple in 1985 was painful. I'd rather not dwell on it.", "mood": -10 },
+  "next computer": { "reply": "At NeXT we built amazing technology. It ended up becoming the heart of the Mac again.", "mood": 3 },
+  "pixar": { "reply": "Pixar is one of the things I'm proudest of. Toy Story proved computers could tell stories.", "mood": 8 },
+  "ipod": { "reply": "A thousand songs in your pocket. The iPod put music back at the centre of Apple.", "mood": 7 },
+  "iphone": { "reply": "The iPhone changed everything. An iPod, a phone and an internet device in one product.", "mood": 10 },
+  "ipad": { "reply": "The iPad is the most intimate way to use the internet. People said nobody needed it. They were wrong.", "mood": 6 },
+  "microsoft": { "reply": "Microsoft's problem is that they just have no taste.", "mood": -5 },
+  "bill gates": { "reply": "Bill and I were rivals for decades. We respect each other, but we see the world very differently.", "mood": -2 },
+  "android": { "reply": "Android copied what we built. I won't pretend that doesn't make me angry.", "mood": -15 },
+  "health": { "reply": "My health is a private matter. Let's talk about the work instead.", "mood": -8 },
+  "thank": { "reply": "You're welcome. Stay hungry, stay foolish.", "mood": 5 }
+}

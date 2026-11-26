@@ -2,8 +2,9 @@ const express = require('express')
 
 const router = express.Router()
 
-// Each file in this folder is one API function: /api/<name>
-router.use('/health', require('./health'))
-router.use('/chat', require('./chat'))
+// Every route here is available under /api, for example /api/chat
+router.use('/health', require('./health')) // GET  /api/health
+router.use('/chat', require('./chat'))     // POST /api/chat
+router.use('/mood', require('./mood'))     // GET  /api/mood, POST /api/mood/reset
 
 module.exports = router

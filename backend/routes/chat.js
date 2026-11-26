@@ -1,28 +1,35 @@
 const express = require('express')
+const { changeMood } = require('../mood')
 
 const router = express.Router()
 
-// Load the conversation data from the JSON file
+// Keywords and their answers: { "keyword": { "reply": "...", "mood": number } }
 const conversation = require('../data/conversation.json')
 
-// POST /api/chat
+// Used when the message has no known keyword
+const defaultResponse = { reply: "I think that's a little out of scope for today's conversation.", mood: -2 }
+
+/**
+ * POST /api/chat
+ * Body: { message: "Tell me about the iPhone" }
+ * Response: { reply: "The iPhone changed everything...", mood: 60 }
+ */
 router.post('/', (req, res) => {
-  let responseMessage = null
-  const userMessage = req.body.message
+  // Lower case so "iPhone" and "iphone" both match
+  const userMessage = (req.body.message || '').toLowerCase()
 
-  // Check if the user's message contains any messages with responses in the conversation data
-  for (const key in conversation) {
-    if (userMessage.toLowerCase().includes(key)) {
-      //sets the response to the relevant response for the input message
-      responseMessage = conversation[key]}
+  // Find a keyword inside the message, the last match in the file wins
+  let response = defaultResponse
+  for (const keyword in conversation) {
+    if (userMessage.includes(keyword)) {
+      response = conversation[keyword]
     }
-
-  // sends the response back or default message if user input has no response in the conversation data
-  if (responseMessage) {
-    res.json({ reply: responseMessage })
-  } else {
-    res.json({ reply: "I think that's a little out of scope for today's conversation."})
   }
+
+  // Every answer makes Jobs a bit happier or angrier
+  const mood = changeMood(response.mood)
+
+  res.json({ reply: response.reply, mood: mood })
 })
 
 module.exports = router
