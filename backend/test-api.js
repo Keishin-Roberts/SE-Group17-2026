@@ -2,12 +2,17 @@
 // Start the server first (npm start), then run: node test-api.js
 
 const conversation = require('./data/conversation.json')
+const ideas = require('./data/ideas.json')
 
 const API = 'http://localhost:3000/api'
 const DEFAULT_REPLY = "That's not what we're here to talk about. Ask me something worth my time."
 const OFF_TOPIC_MOOD = 45 // 50 - 5
 const TYPO_PENALTY = 5
 const REPEAT_PENALTY = 5
+
+// Mood changes are read from the data files, so changing a number there does not break the tests
+const IPHONE_MOOD = conversation.iphone.mood
+const APP_IDEA_MOOD = ideas['idea app'].mood
 
 let passed = 0
 let failed = 0
@@ -80,7 +85,7 @@ async function testRoutes() {
 
   await chat('iphone')
   const mood = await (await fetch(API + '/mood')).json()
-  check('GET /api/mood shows the new mood', mood.mood === 60, mood)
+  check('GET /api/mood shows the new mood', mood.mood === 50 + IPHONE_MOOD, mood)
 }
 
 async function testEveryKeyword() {
@@ -159,6 +164,126 @@ async function testMostSpecificKeyword() {
     const result = await chat(message)
     check(`"${message}" -> ${topic}`, isTopicReply(result.reply, topic, 50 + conversation[topic].mood), result)
   }
+}
+
+/**
+ * Checks that the reply is one of the ideas of the area, with the mood added.
+ */
+function isIdeaOfArea(reply, area, mood) {
+  return ideas[area].replies.some(text => reply === withMood(text, mood))
+}
+
+/**
+ * Returns the area of an idea reply (the mood part is removed first), or null.
+ */
+function areaOfIdeaReply(reply) {
+  const text = reply.replace(/ \(Mood: \d+\/100\)$/, '')
+  for (const area in ideas) {
+    if (ideas[area].replies.includes(text)) return area
+  }
+  return null
+}
+
+function testIdeasFile() {
+  console.log('\n--- ideas.json is valid ---')
+
+  const owner = {}
+  const duplicates = []
+  const seen = new Set()
+  const repeated = []
+  let total = 0
+  for (const area in ideas) {
+    for (const keyword of ideas[area].keywords) {
+      if (owner[keyword]) duplicates.push(`"${keyword}" in "${owner[keyword]}" and "${area}"`)
+      owner[keyword] = area
+    }
+    for (const text of ideas[area].replies) {
+      if (seen.has(text)) repeated.push(text)
+      seen.add(text)
+      total++
+    }
+  }
+  check('every idea keyword belongs to only one area', duplicates.length === 0, duplicates)
+  check('no idea is written twice', repeated.length === 0, repeated)
+  check('there are at least 1000 ideas', total >= 1000, total)
+
+  const thin = Object.keys(ideas).filter(area => ideas[area].replies.length < 20)
+  check('every area has at least 20 ideas', thin.length === 0, thin)
+}
+
+async function testIdeas() {
+  console.log('\n--- Ideas: asking for an idea ---')
+
+  // Every keyword of every area gives an idea of that area
+  for (const area in ideas) {
+    for (const keyword of ideas[area].keywords) {
+      await resetMood()
+      const result = await chat('give me an idea for ' + keyword.toUpperCase())
+      check(
+        `"idea for ${keyword}" gives an ${area} idea`,
+        isIdeaOfArea(result.reply, area, 50 + ideas[area].mood) && result.mood === 50 + ideas[area].mood,
+        result
+      )
+    }
+  }
+
+  // Different ways to ask
+  for (const message of ['give me an idea', 'any ideas?', 'inspire me', 'I need some ideas please', 'brainstorm with me', 'what should I build']) {
+    await resetMood()
+    const result = await chat(message)
+    check(`"${message}" gives an idea from any area`, areaOfIdeaReply(result.reply) !== null, result)
+  }
+
+  // Asking again and again gives new ideas, never a repeat complaint or a penalty
+  await resetMood()
+  let previous = ''
+  let sameTwice = 0
+  let lowered = 0
+  let lastMood = 50
+  const distinct = new Set()
+  for (let count = 0; count < 25; count++) {
+    const result = await chat('give me an idea for music')
+    if (result.reply === previous) sameTwice++
+    if (result.mood < lastMood) lowered++
+    previous = result.reply
+    lastMood = result.mood
+    distinct.add(result.reply)
+  }
+  check('the same idea never comes twice in a row', sameTwice === 0, sameTwice)
+  check('asking for ideas again never lowers the mood', lowered === 0, lowered)
+  check('25 music ideas in a row are all different', distinct.size === 25, distinct.size)
+
+  // Without an area, ideas come from many areas
+  await resetMood()
+  const areas = new Set()
+  for (let count = 0; count < 40; count++) {
+    areas.add(areaOfIdeaReply((await chat('give me an idea')).reply))
+  }
+  check('40 general ideas come from at least 10 areas', areas.size >= 10, [...areas])
+
+  // The longest area keyword wins
+  await resetMood()
+  const result = await chat('idea for a mobile app')
+  check('"idea for a mobile app" gives an app idea', isIdeaOfArea(result.reply, 'idea app', 50 + APP_IDEA_MOOD), result)
+
+  // Sharing your own idea is not asking for one
+  for (const message of ['I have an idea', 'what do you think of my idea', 'my startup idea is a bike shop']) {
+    await resetMood()
+    const reply = (await chat(message)).reply
+    check(`"${message}" is feedback, not a new idea`, areaOfIdeaReply(reply) === null && !reply.startsWith("That's not what"), reply)
+  }
+
+  // Normal questions are not taken for idea requests
+  await resetMood()
+  const advice = await chat('what should I do')
+  check('"what should I do" is still the advice topic', isTopicReply(advice.reply, 'advice', 50 + conversation.advice.mood), advice)
+
+  // After an idea, the next normal topic is not a repeat
+  await resetMood()
+  await chat('iphone')
+  await chat('give me an idea')
+  const after = await chat('iphone')
+  check('iPhone, idea, iPhone again is not a repeat', isTopicReply(after.reply, 'iphone', after.mood), after)
 }
 
 async function testReplyVariants() {
@@ -247,15 +372,15 @@ async function testRepeats() {
   await chat('iphone')
   let result = await chat('tell me about the iphone again')
   check(
-    'asking about the iPhone twice gives no answer and mood 55',
-    !endsWithTopicReply(result.reply, 'iphone', result.mood) && result.mood === 50 + 10 - REPEAT_PENALTY,
+    `asking about the iPhone twice gives no answer and mood ${50 + IPHONE_MOOD - REPEAT_PENALTY}`,
+    !endsWithTopicReply(result.reply, 'iphone', result.mood) && result.mood === 50 + IPHONE_MOOD - REPEAT_PENALTY,
     result
   )
 
   await resetMood()
   await chat('iphone')
   result = await chat('iphnoe')
-  check('a typo of the same topic is still a repeat', result.mood === 50 + 10 - REPEAT_PENALTY, result)
+  check('a typo of the same topic is still a repeat', result.mood === 50 + IPHONE_MOOD - REPEAT_PENALTY, result)
 
   await resetMood()
   await chat('iphone')
@@ -263,14 +388,14 @@ async function testRepeats() {
   result = await chat('iphone')
   check(
     'iPhone, then something else, then iPhone again is not a repeat',
-    isTopicReply(result.reply, 'iphone', 50 + 10 - 5 + 10),
+    isTopicReply(result.reply, 'iphone', 50 + IPHONE_MOOD + (OFF_TOPIC_MOOD - 50) + IPHONE_MOOD),
     result
   )
 
   await chat('iphone')
   await resetMood()
   result = await chat('iphone')
-  check('reset starts a new chat, so the same topic is not a repeat', result.mood === 60, result)
+  check('reset starts a new chat, so the same topic is not a repeat', result.mood === 50 + IPHONE_MOOD, result)
 }
 
 async function testMoodLimits() {
@@ -278,14 +403,14 @@ async function testMoodLimits() {
 
   await resetMood()
   let result
-  for (let count = 0; count < 10; count++) {
+  for (let count = 0; count < 20; count++) {
     result = await chat('android')
   }
   check('many "android" messages stop at 0', result.mood === 0, result)
 
   // Different topics each time, otherwise the repeat penalty kicks in
   await resetMood()
-  for (let count = 0; count < 10; count++) {
+  for (let count = 0; count < 40; count++) {
     result = await chat(count % 2 === 0 ? 'iphone' : 'pixar')
   }
   check('many good topics stop at 100', result.mood === 100, result)
@@ -294,11 +419,13 @@ async function testMoodLimits() {
 async function main() {
   try {
     testDataFile()
+    testIdeasFile()
     await testRoutes()
     await testEveryKeyword()
     await testWholeWords()
     await testMostSpecificKeyword()
     await testReplyVariants()
+    await testIdeas()
     await testTypos()
     await testNoMatch()
     await testRepeats()

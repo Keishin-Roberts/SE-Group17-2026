@@ -1,5 +1,5 @@
 const express = require('express')
-const { changeMood, getLastTopic, setLastTopic } = require('../mood')
+const { changeMood, getLastTopic, setLastTopic, drawIdea } = require('../mood')
 const { findClosestKeyword } = require('../spelling')
 
 const router = express.Router()
@@ -14,6 +14,31 @@ for (const topic in conversation) {
     topicOfKeyword[keyword] = topic
   }
 }
+
+// Ideas: { "idea topic": { "keywords": [...], "replies": [ideas], "mood": number } }
+const ideas = require('../data/ideas.json')
+
+// Every idea area keyword and its area, e.g. { "music": "idea music" }
+const areaOfKeyword = {}
+for (const area in ideas) {
+  for (const keyword of ideas[area].keywords) {
+    areaOfKeyword[keyword] = area
+  }
+}
+
+// Every idea of every area in one list, used when the user does not name an area
+const allIdeas = []
+for (const area in ideas) {
+  for (const text of ideas[area].replies) {
+    allIdeas.push({ text: text, mood: ideas[area].mood })
+  }
+}
+
+// Words that mean the user wants an idea, e.g. "give me an idea for a music app"
+const IDEA_REQUEST = /\b(ideas?|inspire me|brainstorm|suggest(ion)?s?|what should i (build|make|create|design|start))\b/
+
+// The topic for users who share their own idea, it must not start idea mode
+const IDEA_FEEDBACK_TOPIC = 'idea feedback'
 
 // Used when the message has no known keyword
 const defaultResponse = { reply: "That's not what we're here to talk about. Ask me something worth my time.", mood: -5 }
@@ -60,6 +85,29 @@ function containsKeyword(message, keyword) {
 }
 
 /**
+ * Gives an idea for the area named in the message (the longest area keyword wins),
+ * or from all areas if none is named. Ideas come from a shuffled deck, so the same
+ * idea is not given again until all the others have been given. Returns { text, mood }.
+ */
+function pickIdea(message) {
+  let area = null
+  let matchedKeyword = ''
+  for (const keyword in areaOfKeyword) {
+    if (keyword.length > matchedKeyword.length && containsKeyword(message, keyword)) {
+      area = areaOfKeyword[keyword]
+      matchedKeyword = keyword
+    }
+  }
+
+  if (area === null) {
+    return drawIdea('all', allIdeas)
+  }
+
+  const areaIdeas = ideas[area].replies.map(text => ({ text: text, mood: ideas[area].mood }))
+  return drawIdea(area, areaIdeas)
+}
+
+/**
  * Picks a random complaint and says which word was misspelled.
  * Example: 'It\'s "iphone", not "iphnoe". Learn to spell.'
  */
@@ -87,9 +135,12 @@ router.post('/', (req, res) => {
     }
   }
 
-  // 2. No exact match, so check for a keyword with a small typo
+  // 2. The user asks for an idea, e.g. "idea for a music app" or just "give me an idea"
+  const isIdeaRequest = IDEA_REQUEST.test(userMessage) && topic !== IDEA_FEEDBACK_TOPIC
+
+  // 3. No exact match, so check for a keyword with a small typo
   let typo = null
-  if (topic === null) {
+  if (topic === null && !isIdeaRequest) {
     typo = findClosestKeyword(userMessage, Object.keys(topicOfKeyword))
     if (typo) {
       topic = topicOfKeyword[typo.keyword]
@@ -99,20 +150,26 @@ router.post('/', (req, res) => {
   let reply
   let moodChange
 
-  if (topic === null) {
-    // 3. Nothing matched at all
+  if (isIdeaRequest) {
+    // Ideas never count as a repeat, every answer is a different idea
+    const idea = pickIdea(userMessage)
+    reply = idea.text
+    moodChange = idea.mood
+    topic = null
+  } else if (topic === null) {
+    // Nothing matched at all
     reply = defaultResponse.reply
     moodChange = defaultResponse.mood
   } else if (topic === getLastTopic()) {
-    // 4. Same topic as last time, so no answer and no bonus, only a penalty
+    // Same topic as last time, so no answer and no bonus, only a penalty
     reply = pickRandom(repeatComplaints)
     moodChange = -REPEAT_PENALTY
   } else if (typo) {
-    // 5. Jobs still answers, but complains first and gets annoyed
+    // Jobs still answers, but complains first and gets annoyed
     reply = makeComplaint(typo.keyword, typo.typedText) + ' ' + pickRandom(conversation[topic].replies)
     moodChange = conversation[topic].mood - TYPO_PENALTY
   } else {
-    // 6. Normal answer, one of the topic's replies picked at random
+    // Normal answer, one of the topic's replies picked at random
     reply = pickRandom(conversation[topic].replies)
     moodChange = conversation[topic].mood
   }
