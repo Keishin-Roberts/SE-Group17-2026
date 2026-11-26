@@ -369,3 +369,124 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* Leave room above the chat so the badge cannot cover it. */
+#root {
+  padding-top: 72px;
+}
+
+/* Small top-right status badge. */
+.mood-status {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  box-sizing: border-box;
+  padding: 8px 14px;
+  border: 1px solid rgb(23 37 54 / 12%);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgb(23 37 54 / 10%);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* Mood 50–59. */
+.mood-neutral {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Mood 60–79. */
+.mood-positive {
+  background-color: #86efac;
+  color: #14532d;
+}
+
+/* Mood 80–100. */
+.mood-very-positive {
+  background-color: #15803d;
+  color: #ffffff;
+}
+
+/* Mood 26–49. */
+.mood-negative {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+}
+
+/* Mood 0–25. */
+.mood-very-negative {
+  background-color: #b91c1c;
+  color: #ffffff;
+}
+
+/* Backend unavailable. */
+.mood-offline {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mood-status {
+    transition: none;
+  }
+}
+/* Space for the controls and a possible error message. */
+#root {
+  padding-top: 96px;
+}
+
+/* Keep the badge and reset button together at the top-right. */
+.mood-controls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 32px);
+}
+
+/* The wrapper now positions the badge. */
+.mood-status {
+  position: static;
+}
+
+.mood-reset {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.mood-reset:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.mood-reset:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.mood-reset:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 3px;
+}
+
+.mood-reset-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #991b1b;
+  font-size: 0.75rem;
+}
