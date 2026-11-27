@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import ChatBox from './ChatBox.jsx'
 import MoodStatus from './MoodStatus.jsx'
 import { getMoodLevel } from './moodLevel.js'
+import Accessibility from './Accessibility.jsx'
 
 // Web addresses of all the faces of Steve Jobs, used to load them early.
 const faceUrls = import.meta.glob('./assets/steve_jobs_*.svg', {
@@ -137,6 +138,7 @@ function App() {
 
     return (
         <>
+            <Accessibility />
             <MoodStatus
                 mood={mood}
                 isOnline={isOnline}
