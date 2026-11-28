@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function SwitchSlider({ label = 'Enable notifications' }) {
   const [isOn, setIsOn] = useState(false);
@@ -20,12 +20,18 @@ function SwitchSlider({ label = 'Enable notifications' }) {
 }
 
 function FontDropdown() {
-  const [selectedFont, setSelectedFont] = useState('Arial');
+  const [selectedFont, setSelectedFont] = useState('arial');
 
   const options = [
-    { label: 'Arial', value: 'arial' },
-    { label: 'Calibri', value: 'calibri' }
+    { label: 'Arial (Default)', value: 'Arial, sans-serif' },
+    { label: 'Roboto Mono (Monospace)', value: '"Roboto Mono", monospace' },
+    { label: 'Comic Sans (Dyslexia Friendly)', value: '"Comic Sans MS", "Comic Sans", cursive' },
+    { label: 'Verdana (Wide Spacing)', value: 'Verdana, Geneva, sans-serif' },
   ];
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--chosen-font', `${selectedFont}`);
+  }, [selectedFont]);
 
   return (
     <div>
@@ -50,6 +56,10 @@ function FontDropdown() {
 
 function TextSizeSlider() {
   const [value, setValue] = useState(16);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--font-size', `${value}px`);
+  }, [value]);
 
   return (
     <div className="font-size-slider">
